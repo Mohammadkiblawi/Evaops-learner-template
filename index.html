@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EVAOPS Academy – Learn Python Through Games</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon"><i class="fas fa-code"></i></div>
+        <span>EVAOPS</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="#" class="nav-link">Kids Program</a></li>
+        <li><a href="#" class="nav-link">Teen Program</a></li>
+        <li><a href="#" class="nav-link">Adult Program</a></li>
+        <li class="mobile-only-actions">
+          <button class="btn-signin mobile-btn" id="openSigninMobile">Sign In</button>
+          <button class="btn-trial mobile-btn" id="openTrialMobile">Start Free Trial</button>
+        </li>
+      </ul>
+      <div class="nav-actions">
+        <button class="btn-signin" id="openSignin">Sign In</button>
+        <button class="btn-trial" id="openTrialNav">Start Free Trial</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-container">
+      <div class="hero-content" data-aos="fade-right">
+        <div class="hero-badge">
+          <i class="fas fa-gamepad"></i>
+          <span>Interactive Python Learning Platform</span>
+        </div>
+        <h1 class="hero-title">
+          Learn Python Through <span class="highlight">Interactive Games</span>
+        </h1>
+        <p class="hero-desc">
+         Build real Python skills through interactive games, coding challenges, and creative projects designed for children, teenagers, and adults. From beginner-friendly visual learning to advanced programming concepts, every learner progresses through engaging hands-on experiences.
+        </p>
+        <div class="hero-cta">
+          <button class="btn-primary" id="openTrialHero">
+            Start Your Journey <i class="fas fa-arrow-right"></i>
+          </button>
+          <button class="btn-ghost" id="watchDemo">
+            <span class="play-icon"><i class="fas fa-play"></i></span> Watch Demo
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-value"><span class="stat-number" data-target="10">0</span><span class="stat-suffix">K+</span></div>
+            <p>Active Students</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value"><span class="stat-number" data-target="500">0</span><span class="stat-suffix">+</span></div>
+            <p>Games & Challenges</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value"><span class="stat-number" data-target="98">0</span><span class="stat-suffix">%</span></div>
+            <p>Success Rate</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-aos="fade-left">
+        <div class="badge-top-rated">
+          <i class="fas fa-star"></i> Top Rated
+        </div>
+        <div class="code-card">
+          <div class="card-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="level-badge">Level 5</span>
+          </div>
+          <div class="card-icon-area">
+            <i class="fas fa-gamepad card-icon"></i>
+          </div>
+          <div class="quest-title">Quest: Build a Calculator</div>
+          <div class="quest-desc">Use Python functions to solve math problems!</div>
+          <div class="code-block">
+            <div class="code-line"><span class="kw">def</span> <span class="fn">add</span>(a, b):</div>
+            <div class="code-line indent"><span class="kw">return</span> a + b</div>
+          </div>
+          <div class="progress-bar-outer">
+            <span class="progress-label">75%</span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" style="width:75%"></div>
+            </div>
+          </div>
+          <div class="floating-badge badge-python"><i class="fab fa-python"></i> Python</div>
+          <div class="floating-badge badge-xp"><i class="fas fa-bolt"></i> +50 XP</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="why-section" id="why">
+    <div class="section-container">
+      <h2 class="section-title" data-aos="fade-up">Why Choose EVAOPS?</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+        Learn Python the fun way with our game-based approach designed for all skill levels
+      </p>
+      <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-icon-wrap"><i class="fas fa-gamepad"></i></div>
+          <h3>Game-Based Learning</h3>
+          <p>Our game-based learning system helps students build real coding skills through interactive lessons, creative projects, and personalized learning paths</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature-icon-wrap"><i class="fas fa-users"></i></div>
+          <h3>Age-Appropriate Content</h3>
+          <p>Programs are carefully designed for children, teenagers, and adults with content tailored to every skill level.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature-icon-wrap"><i class="fas fa-trophy"></i></div>
+          <h3>Progress Tracking</h3>
+          <p>Track learning milestones, unlock achievements, and monitor coding progress with real-time performance insights.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+          <div class="feature-icon-wrap"><i class="fas fa-code"></i></div>
+          <h3>Real Python Code</h3>
+          <p>Start with beginner-friendly game mechanics and gradually transition into professional Python programming.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNING PATHS -->
+  <section class="paths-section" id="paths">
+    <div class="section-container">
+      <h2 class="section-title" data-aos="fade-up">Programs Designed for Every Age Group</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Flexible learning experiences tailored to each stage of the coding journey.</p>
+      <div class="paths-grid">
+        <div class="path-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="path-icon pink"><i class="fas fa-star"></i></div>
+          <h3>Kids Coding Adventures</h3>
+          <p>Ages 7-12: Fun, visual games that make coding feel like magic</p>
+          <a href="#" class="path-link">Explore Programs <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="path-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="path-icon blue"><i class="fas fa-rocket"></i></div>
+          <h3>Teen Developer Academy</h3>
+          <p>Ages 13-18: Build real projects and prepare for tech careers</p>
+          <a href="#" class="path-link">Explore Programs <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="path-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="path-icon orange"><i class="fas fa-bullseye"></i></div>
+          <h3>Professional Python Tracks</h3>
+          <p>Ages 18+: Professional skills for career advancement</p>
+          <a href="#" class="path-link">Explore Programs <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-section" id="cta">
+    <div class="cta-container" data-aos="fade-up">
+      <h2>Ready to Start Your Coding Adventure?</h2>
+      <p>Join thousands of students already learning Python through games</p>
+      <button class="btn-cta-white" id="openTrialCta">
+        Start Free Trial – No Credit Card Required
+      </button>
+      <div class="cta-notes">
+        <span><i class="fas fa-check-circle"></i> 14-day free trial</span>
+        <span><i class="fas fa-check-circle"></i> Cancel anytime</span>
+        <span><i class="fas fa-check-circle"></i> Access all content</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-code"></i></div>
+          <span>EVAOPS</span>
+        </div>
+        <p>Learn Python through interactive games and challenges.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#">For Children</a></li>
+          <li><a href="#">For Teenagers</a></li>
+          <li><a href="#">For Adults</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="#" class="footer-signin-link">Sign In</a></li>
+          <li><a href="#" class="footer-create-link">Create Account</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 EVAOPS Academy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ===== SINGLE UNIFIED MODAL ===== -->
+  <div class="modal-overlay" id="mainModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card" id="modalCard">
+
+      <!-- Progress Bar (shown for register steps) -->
+      <div class="modal-progress-bar" id="modalProgressBar">
+        <div class="modal-progress-fill" id="modalProgressFill"></div>
+      </div>
+
+      <!-- Close Button -->
+      <button class="modal-close" id="modalClose">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <!-- Back Button -->
+      <button class="modal-back" id="modalBack" style="display:none">
+        <i class="fas fa-arrow-left"></i> <span id="modalBackText">Back</span>
+      </button>
+
+      <!-- Modal Logo -->
+      <div class="modal-logo">
+        <i class="fas fa-code"></i>
+      </div>
+
+      <!-- VIEWS CONTAINER -->
+      <div class="modal-views" id="modalViews">
+
+        <!-- ── VIEW: SIGN IN ── -->
+        <div class="modal-view" id="viewSignin">
+          <p class="modal-step-label" style="visibility:hidden">placeholder</p>
+          <h2 class="modal-title">Welcome back</h2>
+          <p class="modal-sub">Sign in to continue your <span class="purple">Python</span> journey</p>
+          <div class="social-btns">
+            <button class="social-btn">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="18"/> Google
+            </button>
+            <button class="social-btn">
+              <i class="fab fa-github"></i> GitHub
+            </button>
+          </div>
+          <div class="divider"><span>or continue with email</span></div>
+          <form id="signinForm" novalidate>
+            <div class="form-group">
+              <label>Email address</label>
+              <div class="input-wrap">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" id="siEmail" placeholder="you@example.com" class="form-input" autocomplete="email"/>
+              </div>
+              <span class="field-error" id="siEmailErr"></span>
+            </div>
+            <div class="form-group">
+              <div class="label-row">
+                <label>Password</label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+              </div>
+              <div class="input-wrap">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="siPassword" placeholder="••••••••" class="form-input" autocomplete="current-password"/>
+                <button type="button" class="toggle-pw" data-target="siPassword"><i class="fas fa-eye"></i></button>
+              </div>
+              <span class="field-error" id="siPasswordErr"></span>
+            </div>
+            <button type="submit" class="btn-modal-primary">Sign In</button>
+          </form>
+          <p class="modal-footer-text">Don't have an account? <a href="#" class="purple-link" data-goto="viewRegStep1">Create one free</a></p>
+          <div class="secure-note"><i class="fas fa-shield-alt"></i> Secured with 256-bit SSL encryption</div>
+        </div>
+
+        <!-- ── VIEW: REGISTER STEP 1 ── -->
+        <div class="modal-view" id="viewRegStep1">
+          <p class="modal-step-label">Step 1 of 2</p>
+          <h2 class="modal-title">Choose your path</h2>
+          <p class="modal-sub">Select the learning track that fits you best</p>
+          <div class="path-options" id="pathOptions">
+            <div class="path-option" data-value="child">
+              <div class="path-opt-icon pink"><i class="fas fa-star"></i></div>
+              <div class="path-opt-info">
+                <strong>Child</strong>
+                <span>Ages 7–12</span>
+              </div>
+              <span class="custom-radio"></span>
+            </div>
+            <div class="path-option" data-value="teenager">
+              <div class="path-opt-icon blue"><i class="fas fa-rocket"></i></div>
+              <div class="path-opt-info">
+                <strong>Teenager</strong>
+                <span>Ages 13–18</span>
+              </div>
+              <span class="custom-radio"></span>
+            </div>
+            <div class="path-option" data-value="adult">
+              <div class="path-opt-icon orange"><i class="fas fa-bullseye"></i></div>
+              <div class="path-opt-info">
+                <strong>Adult</strong>
+                <span>Ages 18+</span>
+              </div>
+              <span class="custom-radio"></span>
+            </div>
+          </div>
+          <span class="field-error" id="pathErr"></span>
+          <button class="btn-modal-primary" id="continueStep1">
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+          <p class="modal-footer-text">Already have an account? <a href="#" class="purple-link" data-goto="viewSignin">Sign in</a></p>
+          <div class="secure-note"><i class="fas fa-shield-alt"></i> Secured with 256-bit SSL encryption</div>
+        </div>
+
+        <!-- ── VIEW: REGISTER STEP 2 ── -->
+        <div class="modal-view" id="viewRegStep2">
+          <p class="modal-step-label">Step 2 of 2</p>
+          <h2 class="modal-title">Create your account</h2>
+          <p class="modal-sub">Fill in your <span class="purple">details</span> to get started</p>
+          <div class="social-btns">
+            <button class="social-btn">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="18"/> Google
+            </button>
+            <button class="social-btn">
+              <i class="fab fa-github"></i> GitHub
+            </button>
+          </div>
+          <div class="divider"><span>or fill in details</span></div>
+          <form id="registerForm" novalidate>
+            <div class="form-group">
+              <label>Full name</label>
+              <div class="input-wrap">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="regName" placeholder="Alex Johnson" class="form-input" autocomplete="name"/>
+              </div>
+              <span class="field-error" id="regNameErr"></span>
+            </div>
+            <div class="form-group">
+              <label>Email address</label>
+              <div class="input-wrap">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" id="regEmail" placeholder="you@example.com" class="form-input" autocomplete="email"/>
+              </div>
+              <span class="field-error" id="regEmailErr"></span>
+            </div>
+            <div class="form-row">
+              <div class="form-group half">
+                <label>Password</label>
+                <div class="input-wrap">
+                  <i class="fas fa-lock input-icon"></i>
+                  <input type="password" id="regPassword" placeholder="••••••••" class="form-input" autocomplete="new-password"/>
+                  <button type="button" class="toggle-pw" data-target="regPassword"><i class="fas fa-eye"></i></button>
+                </div>
+                <span class="field-error" id="regPasswordErr"></span>
+              </div>
+              <div class="form-group half">
+                <label>Confirm</label>
+                <div class="input-wrap">
+                  <i class="fas fa-lock input-icon"></i>
+                  <input type="password" id="regConfirm" placeholder="••••••••" class="form-input" autocomplete="new-password"/>
+                  <button type="button" class="toggle-pw" data-target="regConfirm"><i class="fas fa-eye"></i></button>
+                </div>
+                <span class="field-error" id="regConfirmErr"></span>
+              </div>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="agreeTerms"/>
+              <label for="agreeTerms">I agree to the <a href="#" class="purple-link">Terms of Service</a> and <a href="#" class="purple-link">Privacy Policy</a></label>
+            </div>
+            <span class="field-error" id="agreeErr"></span>
+            <button type="submit" class="btn-modal-primary btn-start-trial">
+              <i class="fas fa-rocket"></i> Start Free Trial
+            </button>
+          </form>
+          <p class="modal-footer-text">Already have an account? <a href="#" class="purple-link" data-goto="viewSignin">Sign in</a></p>
+          <div class="secure-note"><i class="fas fa-shield-alt"></i> Secured with 256-bit SSL encryption</div>
+        </div>
+
+        <!-- ── VIEW: DEMO removed; now in separate modal below ── -->
+
+      </div><!-- /modal-views -->
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===== DEMO MODAL (separate, standalone) ===== -->
+  <div class="modal-overlay" id="demoModal">
+    <div class="modal-backdrop" id="demoModalBackdrop"></div>
+    <div class="modal-card" id="demoModalCard">
+      <button class="modal-close" id="demoModalClose">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="demo-content" style="padding-top: 28px;">
+        <div class="demo-icon"><i class="fas fa-play-circle"></i></div>
+        <h3 class="modal-title" style="font-size:1.4rem">How EVAOPS Works</h3>
+        <p class="modal-sub">See how students learn Python through interactive game-based challenges</p>
+        <div class="demo-placeholder">
+          <i class="fas fa-play"></i>
+          <span>Demo Video Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
