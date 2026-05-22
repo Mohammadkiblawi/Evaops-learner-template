@@ -650,7 +650,7 @@ document.getElementById('ctaStartLearning')?.addEventListener('click', () => {
         `;
         document.head.appendChild(style);
 
-        document.querySelectorAll('.btn-primary, .btn-cta-white, .btn-ghost,.ch-cta-btn').forEach(btn => {
+        document.querySelectorAll('.btn-primary, .btn-cta-white, .btn-ghost,.ch-cta-btn,.btn-signin,.btn-trial').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 for (let i = 0; i < 6; i++) {
                     setTimeout(() => createParticle(e.clientX + (Math.random()-0.5)*30, e.clientY + (Math.random()-0.5)*30), i * 50);

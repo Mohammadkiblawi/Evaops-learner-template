@@ -1410,15 +1410,6 @@ img {
     text-decoration: underline;
 }
 
-.secure-note {
-    text-align: center;
-    color: var(--text-light);
-    font-size: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
 
 /* Path Options */
 .path-options {
