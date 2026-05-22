@@ -12,6 +12,7 @@ const mobileOverlay = document.getElementById('mobileOverlay');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 10);
   updateAOS();
+  updateJourneySteps();
 }, { passive: true });
 
 // Toggle mobile menu
@@ -563,3 +564,97 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
+
+/* ============================================================
+   JOURNEY STEP SCROLL HIGHLIGHTING
+   — activates the step whose circle is closest to the vertical
+     centre of the viewport (40% down from top)
+============================================================ */
+const journeyItems = document.querySelectorAll('.ch-journey-item');
+
+function updateJourneySteps() {
+  if (!journeyItems.length) return;
+
+  const focusY = window.innerHeight * 0.42; // focal line in viewport
+  let closestIdx = 0;
+  let closestDist = Infinity;
+
+  journeyItems.forEach((item, i) => {
+    const circle = item.querySelector('.ch-step-circle');
+    if (!circle) return;
+    const rect = circle.getBoundingClientRect();
+    const circleMid = rect.top + rect.height / 2;
+    const dist = Math.abs(circleMid - focusY);
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestIdx = i;
+    }
+  });
+
+  journeyItems.forEach((item, i) => {
+    const circle = item.querySelector('.ch-step-circle');
+    const isActive = i === closestIdx;
+    item.classList.toggle('is-active', isActive);
+    circle?.classList.toggle('is-active', isActive);
+  });
+}
+
+// Run once on load to set initial active state
+window.addEventListener('load', updateJourneySteps);
+setTimeout(updateJourneySteps, 200);
+
+
+/* ============================================================
+   GAME CARD "Start Game" LINKS → open trial modal
+============================================================ */
+document.querySelectorAll('.ch-start-link[data-action="trial"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    openModal('viewRegStep1');
+  });
+});
+
+
+/* ============================================================
+   CTA BUTTON → open trial modal
+============================================================ */
+document.getElementById('ctaStartLearning')?.addEventListener('click', () => {
+  openModal('viewRegStep1');
+});
+
+   // ===== PARTICLE EFFECT ON BUTTON CLICK =====
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: 8px;
+                height: 8px;
+                background: var(--blue);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                animation: particleFly 0.8s ease forwards;
+            `;
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 800);
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes particleFly {
+                0% { transform: scale(1) translate(0,0); opacity: 1; }
+                100% { transform: scale(0) translate(${(Math.random()-0.5)*100}px, -100px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        document.querySelectorAll('.btn-primary, .btn-cta-white, .btn-ghost,.ch-cta-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                for (let i = 0; i < 6; i++) {
+                    setTimeout(() => createParticle(e.clientX + (Math.random()-0.5)*30, e.clientY + (Math.random()-0.5)*30), i * 50);
+                }
+            });
+        });
+
