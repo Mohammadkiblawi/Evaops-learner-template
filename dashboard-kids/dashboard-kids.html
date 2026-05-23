@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kids Dashboard – EVAOPS Academy</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link rel="stylesheet" href="dashboard-kids.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ══════════════════════════════════════════════
+       NEW LAYOUT OVERRIDES – matching reference image
+    ══════════════════════════════════════════════ */
+
+    /* Three-column grid: narrow left sidebar | wide middle | narrow right */
+    .dash-grid {
+      grid-template-columns: 240px 1fr 320px;
+      grid-template-areas: "left mid right";
+      align-items: start;
+    }
+
+    /* ── LEFT SIDEBAR ── */
+    /* Profile card compact */
+    .profile-card {
+      padding: 24px 16px 20px;
+    }
+    .profile-avatar-wrap {
+      width: 90px; height: 90px;
+    }
+    .profile-name { font-size: 1.1rem; }
+    .profile-rank { margin-bottom: 12px; }
+    .profile-xp-hint { margin-bottom: 14px; }
+
+    /* Sidebar Navigation */
+    .sidebar-nav {
+      background: var(--dk-card);
+      border-radius: var(--dk-radius);
+      border: 1.5px solid rgba(124,58,237,0.08);
+      box-shadow: var(--dk-shadow);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sidebar-nav-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      padding: 6px 10px 4px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #374151;
+      cursor: pointer;
+      transition: var(--dk-transition);
+      font-family: 'Nunito', sans-serif;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      text-decoration: none;
+    }
+    .sidebar-nav-item i {
+      width: 18px;
+      text-align: center;
+      font-size: 15px;
+      color: #9ca3af;
+      transition: var(--dk-transition);
+    }
+    .sidebar-nav-item:hover {
+      background: rgba(124,58,237,0.07);
+      color: var(--dk-purple);
+    }
+    .sidebar-nav-item:hover i { color: var(--dk-purple); }
+    .sidebar-nav-item.active {
+      background: rgba(124,58,237,0.12);
+      color: var(--dk-purple);
+    }
+    .sidebar-nav-item.active i { color: var(--dk-purple); }
+
+    /* ── MIDDLE COLUMN – Learning Path ── */
+    .learning-path-card {
+      background: var(--dk-card);
+      border-radius: var(--dk-radius);
+      border: 1.5px solid rgba(124,58,237,0.08);
+      box-shadow: var(--dk-shadow);
+      padding: 24px;
+    }
+    .lp-header {
+      margin-bottom: 20px;
+    }
+    .lp-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--dk-purple);
+      font-family: 'Nunito', sans-serif;
+      margin-bottom: 2px;
+    }
+    .lp-subtitle {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      font-weight: 600;
+    }
+    .lp-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .lp-progress-bar-wrap {
+      flex: 1;
+      height: 7px;
+      background: #f3f4f6;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .lp-progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--dk-purple), var(--dk-purple2));
+      border-radius: 99px;
+      width: 53%; /* 8/15 */
+      box-shadow: 0 0 6px rgba(124,58,237,0.35);
+    }
+    .lp-progress-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--dk-purple);
+      white-space: nowrap;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    /* Section heading */
+    .lp-section-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9ca3af;
+      margin: 20px 0 10px;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    /* Vertical node list */
+    .lp-nodes {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    /* The vertical connecting line */
+    .lp-nodes::before {
+      content: '';
+      position: absolute;
+      left: 21px;
+      top: 22px;
+      bottom: 22px;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(124,58,237,0.25), rgba(124,58,237,0.05));
+      border-radius: 99px;
+      z-index: 0;
+    }
+
+    .lp-node {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 12px 10px 0;
+      border-radius: 14px;
+      transition: var(--dk-transition);
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    .lp-node:hover { background: rgba(124,58,237,0.04); }
+    .lp-node.locked { opacity: 0.5; pointer-events: none; }
+
+    .lp-node-icon {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      position: relative;
+      z-index: 1;
+    }
+    .lp-node-icon.done    { background: linear-gradient(135deg, var(--dk-purple), var(--dk-purple2)); }
+    .lp-node-icon.current { background: linear-gradient(135deg, #f59e0b, #f97316); animation: badgePulse 2s ease-in-out infinite; }
+    .lp-node-icon.boss    { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .lp-node-icon.locked  { background: linear-gradient(135deg, #e5e7eb, #d1d5db); color: #9ca3af; box-shadow: none; }
+
+    .lp-node-body { flex: 1; min-width: 0; }
+    .lp-node-name {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #1f2937;
+      font-family: 'Nunito', sans-serif;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .lp-node.locked .lp-node-name { color: #9ca3af; }
+    .lp-node-meta {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      font-weight: 600;
+    }
+
+    .lp-node-status {
+      flex-shrink: 0;
+      font-size: 0.72rem;
+      font-weight: 800;
+      font-family: 'Nunito', sans-serif;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+    .lp-node-status.done    { background: rgba(124,58,237,0.1); color: var(--dk-purple); }
+    .lp-node-status.current { background: linear-gradient(135deg,#fef3c7,#fde68a); color: #b45309; border: 1px solid #fde68a; }
+    .lp-node-status.locked  { background: #f3f4f6; color: #9ca3af; }
+    .lp-node-status.boss    { background: linear-gradient(135deg,#fee2e2,#fecaca); color: #dc2626; border: 1px solid #fca5a5; }
+
+    /* Section divider connector */
+    .lp-section-divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      padding-left: 0;
+    }
+    .lp-section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(124,58,237,0.1);
+    }
+    .lp-section-divider-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(124,58,237,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ── RIGHT COLUMN – Leaderboard only ── */
+    .lb-card { padding: 20px 20px 16px; }
+
+    /* ── Daily Goal card ── */
+    .daily-goal-card {
+      background: var(--dk-card);
+      border-radius: var(--dk-radius);
+      border: 1.5px solid rgba(124,58,237,0.08);
+      box-shadow: var(--dk-shadow);
+      padding: 18px 20px;
+    }
+    .daily-goal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .daily-goal-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      font-family: 'Nunito', sans-serif;
+    }
+    .daily-goal-val {
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: var(--dk-purple);
+      font-family: 'Nunito', sans-serif;
+    }
+    .daily-goal-bar-wrap {
+      height: 8px;
+      background: #f3f4f6;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .daily-goal-bar-fill {
+      height: 100%;
+      width: 40%;
+      background: linear-gradient(90deg, var(--dk-green), #059669);
+      border-radius: 99px;
+      box-shadow: 0 0 6px rgba(16,185,129,0.4);
+    }
+    .daily-goal-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* ── Achievements card ── */
+    .achievements-card {
+      background: var(--dk-card);
+      border-radius: var(--dk-radius);
+      border: 1.5px solid rgba(124,58,237,0.08);
+      box-shadow: var(--dk-shadow);
+      padding: 18px 20px;
+    }
+    .achievements-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      font-family: 'Nunito', sans-serif;
+      margin-bottom: 12px;
+    }
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .achievement-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 8px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(124,58,237,0.08);
+      background: #fafafa;
+      cursor: pointer;
+      transition: var(--dk-transition);
+    }
+    .achievement-item:hover { background: rgba(124,58,237,0.04); border-color: rgba(124,58,237,0.2); }
+    .achievement-item.locked { opacity: 0.45; }
+    .achievement-icon {
+      font-size: 22px;
+    }
+    .achievement-icon.earned { color: var(--dk-purple); }
+    .achievement-icon.locked { color: #d1d5db; }
+    .achievement-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #374151;
+      text-align: center;
+      font-family: 'Nunito', sans-serif;
+    }
+    .achievement-item.locked .achievement-label { color: #9ca3af; }
+
+    /* ── Settings panel ── */
+    .settings-panel {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .settings-panel.active { display: flex; }
+
+    .settings-card {
+      background: var(--dk-card);
+      border-radius: var(--dk-radius);
+      border: 1.5px solid rgba(124,58,237,0.08);
+      box-shadow: var(--dk-shadow);
+      padding: 20px;
+    }
+    .settings-section-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      font-family: 'Nunito', sans-serif;
+      margin-bottom: 14px;
+    }
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(124,58,237,0.06);
+    }
+    .settings-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .settings-row-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.87rem;
+      font-weight: 700;
+      color: #374151;
+    }
+    .settings-row-label i {
+      width: 20px;
+      text-align: center;
+      color: var(--dk-purple);
+      font-size: 14px;
+    }
+    /* Toggle switch */
+    .toggle {
+      position: relative;
+      width: 40px; height: 22px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #e5e7eb;
+      border-radius: 99px;
+      transition: var(--dk-transition);
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      left: 3px; bottom: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: var(--dk-transition);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .toggle input:checked + .toggle-slider { background: var(--dk-purple); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+    .settings-select {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--dk-purple);
+      border: 1.5px solid rgba(124,58,237,0.2);
+      background: rgba(124,58,237,0.06);
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer;
+    }
+
+    /* ── Progress panel ── */
+    .progress-panel {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .progress-panel.active { display: flex; }
+
+    .progress-stat-card {
+      background: var(--dk-card);
+      border-radius: var(--dk-radius);
+      border: 1.5px solid rgba(124,58,237,0.08);
+      box-shadow: var(--dk-shadow);
+      padding: 20px;
+    }
+    .progress-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 0;
+    }
+    .progress-stat-item {
+      background: rgba(124,58,237,0.04);
+      border-radius: 14px;
+      padding: 16px 12px;
+      text-align: center;
+      border: 1.5px solid rgba(124,58,237,0.08);
+    }
+    .progress-stat-num {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--dk-purple);
+      font-family: 'Nunito', sans-serif;
+      display: block;
+    }
+    .progress-stat-lbl {
+      font-size: 0.73rem;
+      color: #9ca3af;
+      font-weight: 700;
+    }
+    .progress-bar-item {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(124,58,237,0.06);
+    }
+    .progress-bar-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .progress-bar-label-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #374151;
+    }
+    .progress-bar-label-row span:last-child {
+      color: var(--dk-purple);
+    }
+    .progress-bar-bg {
+      height: 7px;
+      background: #f3f4f6;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-bar-fg {
+      height: 100%;
+      border-radius: 99px;
+    }
+    .progress-bar-fg.purple { background: linear-gradient(90deg, var(--dk-purple), var(--dk-purple2)); box-shadow: 0 0 6px rgba(124,58,237,0.35); }
+    .progress-bar-fg.teal   { background: linear-gradient(90deg, var(--dk-teal), #0891b2); box-shadow: 0 0 6px rgba(20,184,166,0.35); }
+    .progress-bar-fg.gold   { background: linear-gradient(90deg, var(--dk-gold), var(--dk-orange)); box-shadow: 0 0 6px rgba(245,158,11,0.35); }
+
+    /* ── Middle content panels ── */
+    .mid-panel { display: none; flex-direction: column; gap: 16px; }
+    .mid-panel.active { display: flex; }
+
+    /* ── Leaderboard full-view: hide right column ── */
+    .dash-grid.hide-right .dash-col--right {
+      display: none;
+    }
+    .dash-grid.hide-right {
+      grid-template-columns: 240px 1fr;
+      grid-template-areas: "left mid";
+    }
+
+    /* ── Podium ── */
+    .lb-podium {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(180deg, rgba(124,58,237,0.04) 0%, transparent 100%);
+      border-radius: 16px;
+      padding: 20px 16px 0;
+      border: 1.5px solid rgba(124,58,237,0.08);
+    }
+    .lb-podium-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+    .lb-podium-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 3px solid rgba(124,58,237,0.2);
+      object-fit: cover;
+      margin-bottom: 4px;
+    }
+    .lb-podium-1 .lb-podium-avatar { width: 64px; height: 64px; border-color: var(--dk-gold); box-shadow: 0 4px 16px rgba(245,158,11,0.3); }
+    .lb-podium-2 .lb-podium-avatar { border-color: #9ca3af; }
+    .lb-podium-3 .lb-podium-avatar { border-color: #cd7c2f; }
+    .lb-podium-rank {
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; margin-bottom: 4px;
+    }
+    .lb-podium-name {
+      font-size: 0.78rem; font-weight: 800;
+      font-family: 'Nunito', sans-serif;
+      text-align: center; color: #1f2937;
+    }
+    .lb-podium-xp {
+      font-size: 0.72rem; color: #9ca3af; font-weight: 600;
+    }
+    .lb-podium-lv {
+      font-size: 0.72rem; font-weight: 800; color: var(--dk-purple);
+      margin-bottom: 8px;
+    }
+    .lb-podium-bar {
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+    }
+    .lb-podium-1 .lb-podium-bar { background: linear-gradient(180deg, rgba(245,158,11,0.25), rgba(245,158,11,0.1)); }
+    .lb-podium-2 .lb-podium-bar { background: linear-gradient(180deg, rgba(156,163,175,0.25), rgba(156,163,175,0.1)); }
+    .lb-podium-3 .lb-podium-bar { background: linear-gradient(180deg, rgba(205,124,47,0.25), rgba(205,124,47,0.1)); }
+
+    /* ── Full leaderboard list with XP bar ── */
+    .lb-list-full .lb-item {
+      padding: 10px 12px;
+    }
+    .lb-xp-bar-wrap {
+      flex: 1;
+      height: 5px;
+      background: #f3f4f6;
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+    .lb-xp-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--dk-purple), var(--dk-purple2));
+      border-radius: 99px;
+    }
+    .lb-xp-bar-fill.you-bar {
+      background: linear-gradient(90deg, var(--dk-gold), var(--dk-orange));
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .dash-grid {
+        grid-template-columns: 220px 1fr 290px;
+      }
+      .dash-grid.hide-right {
+        grid-template-columns: 220px 1fr;
+      }
+    }
+    @media (max-width: 900px) {
+      .dash-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "left right"
+          "mid  mid";
+      }
+    }
+    @media (max-width: 640px) {
+      .dash-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas: "left" "mid" "right";
+      }
+    }
+  </style>
+</head>
+<body class="dash-body">
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav class="dash-nav" id="dashNav">
+    <div class="dash-nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon"><i class="fas fa-code"></i></div>
+        <span>EVAOPS</span>
+      </a>
+
+      <ul class="dash-nav-links" id="dashNavLinks">
+        <li><a href="index.html"     class="dash-nav-link">Home</a></li>
+        <li><a href="children.html"  class="dash-nav-link">For Children</a></li>
+        <li><a href="#"              class="dash-nav-link">For Teenagers</a></li>
+        <li><a href="#"              class="dash-nav-link">For Adults</a></li>
+        <li><a href="dashboard-kids.html" class="dash-nav-link active">
+          <i class="fas fa-gauge-high"></i> Dashboard
+        </a></li>
+      </ul>
+
+      <div class="dash-nav-right">
+        <div class="dash-streak-pill" title="Daily Streak">
+          <i class="fas fa-fire"></i>
+          <span>7 day streak!</span>
+        </div>
+        <button class="dash-courses-btn" id="coursesBtn">
+          <i class="fas fa-arrow-left"></i> Courses
+        </button>
+        <div class="dash-avatar-btn" id="profileBtn" title="Your profile">
+          <div class="dash-avatar-ring">
+            <img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Maria" alt="Avatar" class="dash-avatar-img"/>
+          </div>
+        </div>
+        <button class="dash-hamburger" id="dashHamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="dash-mob-overlay" id="dashMobOverlay"></div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE WRAPPER
+  ═══════════════════════════════════════════ -->
+  <main class="dash-main">
+
+    <!-- HEADER -->
+    <header class="dash-header reveal">
+      <div>
+        <h1 class="dash-greeting">Hey, CodeWizard! <span class="wave-emoji">👋</span></h1>
+        <p class="dash-sub">Keep coding — you are doing amazing! <span>🌟</span></p>
+      </div>
+    </header>
+
+    <!-- THREE-COLUMN GRID -->
+    <div class="dash-grid">
+
+      <!-- ─────────────── LEFT COLUMN ─────────────── -->
+      <aside class="dash-col dash-col--left">
+
+        <!-- Profile Card -->
+        <div class="dash-card profile-card reveal" id="profileCard">
+          <div class="profile-particles">
+            <span class="pp pp1"></span><span class="pp pp2"></span>
+            <span class="pp pp3"></span><span class="pp pp4"></span>
+            <span class="pp pp5"></span><span class="pp pp6"></span>
+          </div>
+
+          <div class="profile-avatar-wrap">
+            <svg class="xp-ring" viewBox="0 0 120 120">
+              <circle class="xp-ring-bg" cx="60" cy="60" r="52"/>
+              <circle class="xp-ring-fill" cx="60" cy="60" r="52" id="xpRingFill"/>
+            </svg>
+            <img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Maria" alt="Avatar" class="profile-avatar-img"/>
+            <div class="profile-lvl-badge">LVL 19</div>
+          </div>
+
+          <h2 class="profile-name">CodeWizard</h2>
+          <p class="profile-rank">Intermediate Coder</p>
+
+          <div class="profile-xp-row">
+            <span class="profile-xp-label">XP Progress</span>
+            <span class="profile-xp-val">5,980 / 7,000</span>
+          </div>
+          <div class="profile-xp-bar">
+            <div class="profile-xp-fill" data-pct="85"></div>
+          </div>
+          <p class="profile-xp-hint">15% to Level 20</p>
+
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <i class="fas fa-medal profile-stat-icon gold"></i>
+              <span class="profile-stat-val">#6</span>
+              <span class="profile-stat-lbl">Rank</span>
+            </div>
+            <div class="profile-stat highlight">
+              <i class="fas fa-check-circle profile-stat-icon green"></i>
+              <span class="profile-stat-val">14</span>
+              <span class="profile-stat-lbl">Quests</span>
+            </div>
+            <div class="profile-stat">
+              <i class="fas fa-shield-halved profile-stat-icon purple"></i>
+              <span class="profile-stat-val">6</span>
+              <span class="profile-stat-lbl">Badges</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar-nav reveal">
+          <span class="sidebar-nav-label">Navigation</span>
+          <button class="sidebar-nav-item active" data-panel="learning-path" onclick="switchPanel('learning-path', this)">
+            <i class="fas fa-route"></i>
+            Learning Path
+          </button>
+          <button class="sidebar-nav-item" data-panel="leaderboard-mid" onclick="switchPanel('leaderboard-mid', this)">
+            <i class="fas fa-trophy"></i>
+            Leaderboard
+          </button>
+          <button class="sidebar-nav-item" data-panel="quests" onclick="switchPanel('quests', this)">
+            <i class="fas fa-scroll"></i>
+            Quests &amp; Badges
+          </button>
+          <button class="sidebar-nav-item" data-panel="progress" onclick="switchPanel('progress', this)">
+            <i class="fas fa-chart-line"></i>
+            Progress
+          </button>
+          <button class="sidebar-nav-item" data-panel="settings" onclick="switchPanel('settings', this)">
+            <i class="fas fa-gear"></i>
+            Settings
+          </button>
+        </nav>
+
+      </aside>
+
+      <!-- ─────────────── MIDDLE COLUMN ─────────────── -->
+      <section class="dash-col dash-col--mid">
+
+        <!-- ── LEARNING PATH PANEL (default active) ── -->
+        <div class="mid-panel active" id="panel-learning-path">
+
+          <div class="learning-path-card reveal">
+            <div class="lp-header">
+              <h2 class="lp-title">Python Learning Path</h2>
+              <p class="lp-subtitle">Kids Track — Section 2 of 5</p>
+              <div class="lp-progress-row">
+                <div class="lp-progress-bar-wrap">
+                  <div class="lp-progress-bar-fill"></div>
+                </div>
+                <span class="lp-progress-label">8 / 15 nodes</span>
+              </div>
+            </div>
+
+            <!-- SECTION 1 -->
+            <p class="lp-section-label">Section 1 — The Basics</p>
+            <div class="lp-nodes">
+
+              <div class="lp-node reveal">
+                <div class="lp-node-icon done"><i class="fas fa-x"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Variables</span>
+                  <span class="lp-node-meta">Lesson · 5 min</span>
+                </div>
+                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
+              </div>
+
+              <div class="lp-node reveal">
+                <div class="lp-node-icon done"><i class="fas fa-print"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Print &amp; Input</span>
+                  <span class="lp-node-meta">Lesson · 6 min</span>
+                </div>
+                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
+              </div>
+
+              <div class="lp-node reveal">
+                <div class="lp-node-icon done"><i class="fas fa-calculator"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Operators</span>
+                  <span class="lp-node-meta">Lesson · 5 min</span>
+                </div>
+                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
+              </div>
+
+              <div class="lp-node reveal">
+                <div class="lp-node-icon boss"><i class="fas fa-skull-crossbones"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Boss Fight</span>
+                  <span class="lp-node-meta">Challenge · 10 min</span>
+                </div>
+                <span class="lp-node-status boss">Boss</span>
+              </div>
+
+            </div>
+
+            <!-- SECTION 2 -->
+            <p class="lp-section-label">Section 2 — Control Flow</p>
+            <div class="lp-nodes">
+
+              <div class="lp-node reveal">
+                <div class="lp-node-icon done"><i class="fas fa-code-branch"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">If / Else</span>
+                  <span class="lp-node-meta">Lesson · 7 min</span>
+                </div>
+                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
+              </div>
+
+              <div class="lp-node reveal">
+                <div class="lp-node-icon current"><i class="fas fa-infinity"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Loops</span>
+                  <span class="lp-node-meta">Lesson · 8 min</span>
+                </div>
+                <span class="lp-node-status current">In Progress</span>
+              </div>
+
+              <div class="lp-node locked reveal">
+                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Nested Logic</span>
+                  <span class="lp-node-meta">Lesson · 9 min</span>
+                </div>
+                <span class="lp-node-status locked">Locked</span>
+              </div>
+
+              <div class="lp-node locked reveal">
+                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Boss Fight</span>
+                  <span class="lp-node-meta">Challenge · 12 min</span>
+                </div>
+                <span class="lp-node-status locked">Locked</span>
+              </div>
+
+            </div>
+
+            <!-- SECTION 3 -->
+            <p class="lp-section-label">Section 3 — Functions</p>
+            <div class="lp-nodes">
+
+              <div class="lp-node locked reveal">
+                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Defining Functions</span>
+                  <span class="lp-node-meta">Lesson · 8 min</span>
+                </div>
+                <span class="lp-node-status locked">Locked</span>
+              </div>
+
+              <div class="lp-node locked reveal">
+                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Parameters</span>
+                  <span class="lp-node-meta">Lesson · 7 min</span>
+                </div>
+                <span class="lp-node-status locked">Locked</span>
+              </div>
+
+              <div class="lp-node locked reveal">
+                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Scope</span>
+                  <span class="lp-node-meta">Lesson · 6 min</span>
+                </div>
+                <span class="lp-node-status locked">Locked</span>
+              </div>
+
+              <div class="lp-node locked reveal">
+                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
+                <div class="lp-node-body">
+                  <span class="lp-node-name">Boss Fight</span>
+                  <span class="lp-node-meta">Challenge · 15 min</span>
+                </div>
+                <span class="lp-node-status locked">Locked</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div><!-- end panel-learning-path -->
+
+        <!-- ── LEADERBOARD PANEL – full expanded view ── -->
+        <div class="mid-panel" id="panel-leaderboard-mid">
+          <div class="dash-card lb-card reveal" style="padding: 24px;">
+            <div class="lb-header" style="margin-bottom:20px;">
+              <div class="lb-title-wrap">
+                <i class="fas fa-trophy lb-trophy"></i>
+                <h3 class="lb-title" style="font-size:1.15rem;">Leaderboard</h3>
+              </div>
+              <span class="lb-badge">This Week</span>
+            </div>
+
+            <!-- Podium top 3 -->
+            <div class="lb-podium reveal">
+              <div class="lb-podium-item lb-podium-2">
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PyMaster99&backgroundColor=9ca3af" class="lb-podium-avatar" alt=""/>
+                <div class="lb-podium-rank rank-2"><i class="fas fa-medal"></i></div>
+                <span class="lb-podium-name">PyMaster99</span>
+                <span class="lb-podium-xp">7,890 XP</span>
+                <span class="lb-podium-lv">Lv.26</span>
+                <div class="lb-podium-bar" style="height:60px;"></div>
+              </div>
+              <div class="lb-podium-item lb-podium-1">
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=CodeWizardJr&backgroundColor=f59e0b" class="lb-podium-avatar" alt=""/>
+                <div class="lb-podium-rank rank-1"><i class="fas fa-crown"></i></div>
+                <span class="lb-podium-name">CodeWizard_Jr</span>
+                <span class="lb-podium-xp">8,420 XP</span>
+                <span class="lb-podium-lv">Lv.28</span>
+                <div class="lb-podium-bar" style="height:90px;"></div>
+              </div>
+              <div class="lb-podium-item lb-podium-3">
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=LoopLegend&backgroundColor=cd7c2f" class="lb-podium-avatar" alt=""/>
+                <div class="lb-podium-rank rank-3"><i class="fas fa-medal"></i></div>
+                <span class="lb-podium-name">LoopLegend</span>
+                <span class="lb-podium-xp">7,340 XP</span>
+                <span class="lb-podium-lv">Lv.24</span>
+                <div class="lb-podium-bar" style="height:45px;"></div>
+              </div>
+            </div>
+
+            <!-- Full list -->
+            <ul class="lb-list lb-list-full reveal" style="margin-top:20px;">
+              <li class="lb-item" data-rank="4">
+                <span class="lb-rank-num">4</span>
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=ByteNinja&backgroundColor=4f46e5" class="lb-avatar" alt=""/>
+                <div class="lb-info"><span class="lb-name">ByteNinja</span><span class="lb-xp">6,920 XP</span></div>
+                <div class="lb-xp-bar-wrap"><div class="lb-xp-bar-fill" style="width:82%"></div></div>
+                <span class="lb-level">Lv.22</span>
+              </li>
+              <li class="lb-item" data-rank="5">
+                <span class="lb-rank-num">5</span>
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PixelCoder&backgroundColor=10b981" class="lb-avatar" alt=""/>
+                <div class="lb-info"><span class="lb-name">PixelCoder</span><span class="lb-xp">6,430 XP</span></div>
+                <div class="lb-xp-bar-wrap"><div class="lb-xp-bar-fill" style="width:76%"></div></div>
+                <span class="lb-level">Lv.21</span>
+              </li>
+              <li class="lb-item lb-you" data-rank="6">
+                <span class="lb-rank-num you-num">6</span>
+                <img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Maria" class="lb-avatar" alt=""/>
+                <div class="lb-info"><span class="lb-name">YOU <i class="fas fa-star lb-you-star"></i></span><span class="lb-xp">5,980 XP</span></div>
+                <div class="lb-xp-bar-wrap"><div class="lb-xp-bar-fill you-bar" style="width:71%"></div></div>
+                <span class="lb-level">Lv.19</span>
+              </li>
+              <li class="lb-item" data-rank="7">
+                <span class="lb-rank-num">7</span>
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=DebugHero&backgroundColor=ef4444" class="lb-avatar" alt=""/>
+                <div class="lb-info"><span class="lb-name">DebugHero</span><span class="lb-xp">5,340 XP</span></div>
+                <div class="lb-xp-bar-wrap"><div class="lb-xp-bar-fill" style="width:63%"></div></div>
+                <span class="lb-level">Lv.17</span>
+              </li>
+              <li class="lb-item" data-rank="8">
+                <span class="lb-rank-num">8</span>
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=AlgoKid&backgroundColor=f97316" class="lb-avatar" alt=""/>
+                <div class="lb-info"><span class="lb-name">AlgoKid</span><span class="lb-xp">4,890 XP</span></div>
+                <div class="lb-xp-bar-wrap"><div class="lb-xp-bar-fill" style="width:58%"></div></div>
+                <span class="lb-level">Lv.16</span>
+              </li>
+              <li class="lb-item" data-rank="9">
+                <span class="lb-rank-num">9</span>
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=StarDev&backgroundColor=8b5cf6" class="lb-avatar" alt=""/>
+                <div class="lb-info"><span class="lb-name">StarDev</span><span class="lb-xp">4,210 XP</span></div>
+                <div class="lb-xp-bar-wrap"><div class="lb-xp-bar-fill" style="width:50%"></div></div>
+                <span class="lb-level">Lv.14</span>
+              </li>
+              <li class="lb-item" data-rank="10">
+                <span class="lb-rank-num">10</span>
+                <img src="https://api.dicebear.com/8.x/bottts/svg?seed=CodeFox&backgroundColor=ec4899" class="lb-avatar" alt=""/>
+                <div class="lb-info"><span class="lb-name">CodeFox</span><span class="lb-xp">3,750 XP</span></div>
+                <div class="lb-xp-bar-wrap"><div class="lb-xp-bar-fill" style="width:44%"></div></div>
+                <span class="lb-level">Lv.12</span>
+              </li>
+            </ul>
+            <button class="lb-see-all" style="margin-top:16px;">See all 284 players <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div><!-- end panel-leaderboard-mid -->
+
+        <!-- ── QUESTS & BADGES PANEL ── -->
+        <div class="mid-panel" id="panel-quests">
+          <div class="dash-tabs reveal">
+            <button class="dash-tab active" data-tab="quests2">
+              <i class="fas fa-scroll"></i> Active Quests
+            </button>
+            <button class="dash-tab" data-tab="badges2">
+              <i class="fas fa-trophy"></i> My Badges
+            </button>
+          </div>
+
+          <div class="dash-tab-panel" id="panelQuests2">
+            <div class="quest-card reveal" data-pct="60">
+              <div class="quest-icon-wrap teal"><i class="fas fa-infinity"></i></div>
+              <div class="quest-body">
+                <div class="quest-top"><h3 class="quest-name">Magic Loops</h3><span class="quest-pct teal-text">60%</span></div>
+                <p class="quest-desc">Complete 5 loop challenges</p>
+                <div class="quest-bar"><div class="quest-bar-fill teal-bar" data-pct="60"></div></div>
+                <div class="quest-foot">
+                  <span class="quest-status"><i class="fas fa-circle-dot"></i> In progress</span>
+                  <a href="#" class="quest-continue">Continue <i class="fas fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="quest-card reveal" data-pct="33">
+              <div class="quest-icon-wrap blue"><i class="fas fa-paw"></i></div>
+              <div class="quest-body">
+                <div class="quest-top"><h3 class="quest-name">Python Zoo</h3><span class="quest-pct blue-text">33%</span></div>
+                <p class="quest-desc">Create 3 animal classes</p>
+                <div class="quest-bar"><div class="quest-bar-fill blue-bar" data-pct="33"></div></div>
+                <div class="quest-foot">
+                  <span class="quest-status"><i class="fas fa-circle-dot"></i> In progress</span>
+                  <a href="#" class="quest-continue">Continue <i class="fas fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="quest-card reveal" data-pct="80">
+              <div class="quest-icon-wrap pink"><i class="fas fa-cat"></i></div>
+              <div class="quest-body">
+                <div class="quest-top"><h3 class="quest-name">Code Critters</h3><span class="quest-pct pink-text">80%</span></div>
+                <p class="quest-desc">Guide 3 critters to safety</p>
+                <div class="quest-bar"><div class="quest-bar-fill pink-bar" data-pct="80"></div></div>
+                <div class="quest-foot">
+                  <span class="quest-status"><i class="fas fa-circle-dot"></i> In progress</span>
+                  <a href="#" class="quest-continue">Continue <i class="fas fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="quest-card reveal locked">
+              <div class="quest-icon-wrap grey"><i class="fas fa-lock"></i></div>
+              <div class="quest-body">
+                <div class="quest-top"><h3 class="quest-name quest-locked-name">Algorithm Arena</h3><span class="quest-pct grey-text">Locked</span></div>
+                <p class="quest-desc">Complete current quests to unlock</p>
+                <div class="quest-bar"><div class="quest-bar-fill grey-bar" data-pct="0"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-tab-panel hidden" id="panelBadges2">
+            <div class="badges-grid">
+              <div class="badge-item earned reveal"><div class="badge-item-icon" style="background:linear-gradient(135deg,#f59e0b,#f97316)"><i class="fas fa-fire"></i></div><span>Hot Streak</span></div>
+              <div class="badge-item earned reveal"><div class="badge-item-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7)"><i class="fas fa-bolt"></i></div><span>Speed Run</span></div>
+              <div class="badge-item earned reveal"><div class="badge-item-icon" style="background:linear-gradient(135deg,#10b981,#059669)"><i class="fas fa-leaf"></i></div><span>First Code</span></div>
+              <div class="badge-item earned reveal"><div class="badge-item-icon" style="background:linear-gradient(135deg,#3b82f6,#6366f1)"><i class="fas fa-star"></i></div><span>Loop Master</span></div>
+              <div class="badge-item earned reveal"><div class="badge-item-icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)"><i class="fas fa-heart"></i></div><span>Critter Hero</span></div>
+              <div class="badge-item earned reveal"><div class="badge-item-icon" style="background:linear-gradient(135deg,#14b8a6,#0891b2)"><i class="fas fa-code"></i></div><span>Code Ninja</span></div>
+              <div class="badge-item locked-b reveal"><div class="badge-item-icon locked-icon"><i class="fas fa-lock"></i></div><span>Bullseye</span></div>
+              <div class="badge-item locked-b reveal"><div class="badge-item-icon locked-icon"><i class="fas fa-lock"></i></div><span>Algorithm</span></div>
+            </div>
+          </div>
+        </div><!-- end panel-quests -->
+
+        <!-- ── PROGRESS PANEL ── -->
+        <div class="mid-panel" id="panel-progress">
+
+          <div class="progress-stat-card reveal">
+            <p class="settings-section-title">Overall Stats</p>
+            <div class="progress-stats-grid">
+              <div class="progress-stat-item">
+                <span class="progress-stat-num">14</span>
+                <span class="progress-stat-lbl">Quests Done</span>
+              </div>
+              <div class="progress-stat-item">
+                <span class="progress-stat-num">6</span>
+                <span class="progress-stat-lbl">Badges Earned</span>
+              </div>
+              <div class="progress-stat-item">
+                <span class="progress-stat-num">7</span>
+                <span class="progress-stat-lbl">Day Streak</span>
+              </div>
+              <div class="progress-stat-item">
+                <span class="progress-stat-num">5,980</span>
+                <span class="progress-stat-lbl">Total XP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-stat-card reveal">
+            <p class="settings-section-title">Skills Progress</p>
+            <div class="progress-bar-item">
+              <div class="progress-bar-label-row">
+                <span>Python Basics</span><span>85%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fg purple" style="width:85%"></div>
+              </div>
+            </div>
+            <div class="progress-bar-item">
+              <div class="progress-bar-label-row">
+                <span>Control Flow</span><span>50%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fg teal" style="width:50%"></div>
+              </div>
+            </div>
+            <div class="progress-bar-item">
+              <div class="progress-bar-label-row">
+                <span>Functions</span><span>0%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fg gold" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="progress-bar-item">
+              <div class="progress-bar-label-row">
+                <span>Object Oriented</span><span>0%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fg purple" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mission Card -->
+          <div class="dash-card mission-card reveal">
+            <div class="mission-header">
+              <div class="mission-icon-wrap"><i class="fas fa-star mission-icon"></i></div>
+              <span class="mission-title">Daily Mission</span>
+              <span class="mission-xp">+500 XP</span>
+            </div>
+            <p class="mission-desc">Complete 2 more challenges to earn a bonus! 🎁</p>
+            <div class="mission-bar-wrap">
+              <div class="mission-bar-fill" data-pct="60"></div>
+            </div>
+            <div class="mission-footer">
+              <span>3 / 5 challenges</span>
+              <span class="mission-pct">60%</span>
+            </div>
+          </div>
+
+        </div><!-- end panel-progress -->
+
+        <!-- ── SETTINGS PANEL ── -->
+        <div class="mid-panel" id="panel-settings">
+
+          <div class="settings-card reveal">
+            <p class="settings-section-title">Account</p>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-user"></i> Username</span>
+              <span style="font-size:0.85rem;font-weight:700;color:#374151">CodeWizard</span>
+            </div>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-envelope"></i> Email</span>
+              <span style="font-size:0.82rem;color:#9ca3af">wizard@evaops.io</span>
+            </div>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-globe"></i> Language</span>
+              <select class="settings-select">
+                <option>English</option>
+                <option>Arabic</option>
+                <option>French</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-card reveal">
+            <p class="settings-section-title">Notifications</p>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-bell"></i> Daily Reminders</span>
+              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-trophy"></i> Leaderboard Alerts</span>
+              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-users"></i> Friend Activity</span>
+              <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="settings-card reveal">
+            <p class="settings-section-title">Appearance</p>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-moon"></i> Dark Mode</span>
+              <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-volume-high"></i> Sound Effects</span>
+              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-row">
+              <span class="settings-row-label"><i class="fas fa-star"></i> Animations</span>
+              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+        </div><!-- end panel-settings -->
+
+      </section>
+
+      <!-- ─────────────── RIGHT COLUMN ─────────────── -->
+      <aside class="dash-col dash-col--right">
+
+        <!-- Daily Goal -->
+        <div class="daily-goal-card reveal">
+          <div class="daily-goal-header">
+            <span class="daily-goal-title">Daily Goal</span>
+            <span class="daily-goal-val">20 / 50 XP</span>
+          </div>
+          <div class="daily-goal-bar-wrap">
+            <div class="daily-goal-bar-fill"></div>
+          </div>
+          <p class="daily-goal-label">XP today</p>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="dash-card lb-card reveal">
+          <div class="lb-header">
+            <div class="lb-title-wrap">
+              <i class="fas fa-trophy lb-trophy"></i>
+              <h3 class="lb-title">Leaderboard</h3>
+            </div>
+            <span class="lb-badge">This Week</span>
+          </div>
+
+          <ul class="lb-list" id="lbList">
+            <li class="lb-item top3" data-rank="1">
+              <div class="lb-rank rank-1"><i class="fas fa-crown"></i></div>
+              <img src="https://api.dicebear.com/8.x/bottts/svg?seed=CodeWizardJr&backgroundColor=f59e0b" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">CodeWizard_Jr</span>
+                <span class="lb-xp">8,420 XP</span>
+              </div>
+              <span class="lb-level">Lv.28</span>
+            </li>
+            <li class="lb-item top3" data-rank="2">
+              <div class="lb-rank rank-2"><i class="fas fa-medal"></i></div>
+              <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PyMaster99&backgroundColor=9ca3af" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">PyMaster99</span>
+                <span class="lb-xp">7,890 XP</span>
+              </div>
+              <span class="lb-level">Lv.26</span>
+            </li>
+            <li class="lb-item top3" data-rank="3">
+              <div class="lb-rank rank-3"><i class="fas fa-medal"></i></div>
+              <img src="https://api.dicebear.com/8.x/bottts/svg?seed=LoopLegend&backgroundColor=cd7c2f" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">LoopLegend</span>
+                <span class="lb-xp">7,340 XP</span>
+              </div>
+              <span class="lb-level">Lv.24</span>
+            </li>
+            <li class="lb-item" data-rank="4">
+              <span class="lb-rank-num">4</span>
+              <img src="https://api.dicebear.com/8.x/bottts/svg?seed=ByteNinja&backgroundColor=4f46e5" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">ByteNinja</span>
+                <span class="lb-xp">6,920 XP</span>
+              </div>
+              <span class="lb-level">Lv.22</span>
+            </li>
+            <li class="lb-item" data-rank="5">
+              <span class="lb-rank-num">5</span>
+              <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PixelCoder&backgroundColor=10b981" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">PixelCoder</span>
+                <span class="lb-xp">6,430 XP</span>
+              </div>
+              <span class="lb-level">Lv.21</span>
+            </li>
+            <li class="lb-item lb-you" data-rank="6">
+              <span class="lb-rank-num you-num">6</span>
+              <img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Maria" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">YOU <i class="fas fa-star lb-you-star"></i></span>
+                <span class="lb-xp">5,980 XP</span>
+              </div>
+              <span class="lb-level">Lv.19</span>
+            </li>
+            <li class="lb-item" data-rank="7">
+              <span class="lb-rank-num">7</span>
+              <img src="https://api.dicebear.com/8.x/bottts/svg?seed=DebugHero&backgroundColor=ef4444" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">DebugHero</span>
+                <span class="lb-xp">5,340 XP</span>
+              </div>
+              <span class="lb-level">Lv.17</span>
+            </li>
+            <li class="lb-item" data-rank="8">
+              <span class="lb-rank-num">8</span>
+              <img src="https://api.dicebear.com/8.x/bottts/svg?seed=AlgoKid&backgroundColor=f97316" class="lb-avatar" alt=""/>
+              <div class="lb-info">
+                <span class="lb-name">AlgoKid</span>
+                <span class="lb-xp">4,890 XP</span>
+              </div>
+              <span class="lb-level">Lv.16</span>
+            </li>
+          </ul>
+          <button class="lb-see-all" id="seeAllBtn">See all 284 players <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <!-- Achievements -->
+        <div class="achievements-card reveal">
+          <p class="achievements-title">Achievements</p>
+          <div class="achievements-grid">
+            <div class="achievement-item">
+              <i class="fas fa-fire achievement-icon earned"></i>
+              <span class="achievement-label">7-day streak</span>
+            </div>
+            <div class="achievement-item">
+              <i class="fas fa-trophy achievement-icon earned"></i>
+              <span class="achievement-label">First boss</span>
+            </div>
+            <div class="achievement-item locked">
+              <i class="fas fa-star achievement-icon locked"></i>
+              <span class="achievement-label">10 lessons</span>
+            </div>
+            <div class="achievement-item locked">
+              <i class="fas fa-bolt achievement-icon locked"></i>
+              <span class="achievement-label">Speed run</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </div><!-- end dash-grid -->
+  </main>
+
+  <!-- XP Toast -->
+  <div class="xp-toast" id="xpToast">
+    <i class="fas fa-star xp-toast-icon"></i>
+    <span>+50 XP earned!</span>
+  </div>
+
+  <!-- Level-up modal -->
+  <div class="lvlup-overlay" id="lvlupOverlay">
+    <div class="lvlup-card">
+      <div class="lvlup-burst"></div>
+      <div class="lvlup-icon"><i class="fas fa-trophy"></i></div>
+      <h2>Level Up!</h2>
+      <p>You reached <strong>Level 20!</strong> 🎉</p>
+      <button class="lvlup-close" id="lvlupClose">Awesome! <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="dashboard-kids.js"></script>
+  <script>
+    // Panel switcher
+    function switchPanel(panelId, btn) {
+      // Update sidebar nav active state
+      document.querySelectorAll('.sidebar-nav-item').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Hide all mid panels
+      document.querySelectorAll('.mid-panel').forEach(p => p.classList.remove('active'));
+
+      // Show target panel
+      const target = document.getElementById('panel-' + panelId);
+      if (target) {
+        target.classList.add('active');
+        // Re-trigger reveal animations for newly shown panel
+        target.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('visible');
+          setTimeout(() => el.classList.add('visible'), 50);
+        });
+        // Re-animate bars inside newly shown panel
+        target.querySelectorAll('.quest-bar-fill[data-pct]').forEach(el => {
+          el.style.width = '0';
+          setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 150);
+        });
+        target.querySelectorAll('.mission-bar-fill[data-pct]').forEach(el => {
+          el.style.width = '0';
+          setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 200);
+        });
+      }
+
+      // Hide / show right column for leaderboard full view
+      const grid = document.querySelector('.dash-grid');
+      if (panelId === 'leaderboard-mid') {
+        grid.classList.add('hide-right');
+      } else {
+        grid.classList.remove('hide-right');
+      }
+    }
+
+    // Tab switcher for quests2 / badges2 panel
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.dataset.tab;
+          // Find sibling tabs in same container
+          const tabsContainer = btn.closest('.dash-tabs');
+          if (!tabsContainer) return;
+          tabsContainer.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Find the panel section (parent of tabs)
+          const section = tabsContainer.closest('.mid-panel') || tabsContainer.closest('.dash-col--mid');
+
+          // Map tab names to panel IDs
+          const panelMap = {
+            'quests':  'panelQuests',
+            'badges':  'panelBadges',
+            'quests2': 'panelQuests2',
+            'badges2': 'panelBadges2',
+          };
+          // Hide all tab panels in scope
+          ['panelQuests','panelBadges','panelQuests2','panelBadges2'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+          });
+          const target = document.getElementById(panelMap[tab]);
+          if (target) target.classList.remove('hidden');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
