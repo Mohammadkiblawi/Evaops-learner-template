@@ -8,614 +8,7 @@
   <link rel="stylesheet" href="dashboard-kids.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    /* ══════════════════════════════════════════════
-       NEW LAYOUT OVERRIDES – matching reference image
-    ══════════════════════════════════════════════ */
 
-    /* Three-column grid: narrow left sidebar | wide middle | narrow right */
-    .dash-grid {
-      grid-template-columns: 240px 1fr 320px;
-      grid-template-areas: "left mid right";
-      align-items: start;
-    }
-
-    /* ── LEFT SIDEBAR ── */
-    /* Profile card compact */
-    .profile-card {
-      padding: 24px 16px 20px;
-    }
-    .profile-avatar-wrap {
-      width: 90px; height: 90px;
-    }
-    .profile-name { font-size: 1.1rem; }
-    .profile-rank { margin-bottom: 12px; }
-    .profile-xp-hint { margin-bottom: 14px; }
-
-    /* Sidebar Navigation */
-    .sidebar-nav {
-      background: var(--dk-card);
-      border-radius: var(--dk-radius);
-      border: 1.5px solid rgba(124,58,237,0.08);
-      box-shadow: var(--dk-shadow);
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .sidebar-nav-label {
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #9ca3af;
-      padding: 6px 10px 4px;
-      font-family: 'Nunito', sans-serif;
-    }
-    .sidebar-nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #374151;
-      cursor: pointer;
-      transition: var(--dk-transition);
-      font-family: 'Nunito', sans-serif;
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      text-decoration: none;
-    }
-    .sidebar-nav-item i {
-      width: 18px;
-      text-align: center;
-      font-size: 15px;
-      color: #9ca3af;
-      transition: var(--dk-transition);
-    }
-    .sidebar-nav-item:hover {
-      background: rgba(124,58,237,0.07);
-      color: var(--dk-purple);
-    }
-    .sidebar-nav-item:hover i { color: var(--dk-purple); }
-    .sidebar-nav-item.active {
-      background: rgba(124,58,237,0.12);
-      color: var(--dk-purple);
-    }
-    .sidebar-nav-item.active i { color: var(--dk-purple); }
-
-    /* ── MIDDLE COLUMN – Learning Path ── */
-    .learning-path-card {
-      background: var(--dk-card);
-      border-radius: var(--dk-radius);
-      border: 1.5px solid rgba(124,58,237,0.08);
-      box-shadow: var(--dk-shadow);
-      padding: 24px;
-    }
-    .lp-header {
-      margin-bottom: 20px;
-    }
-    .lp-title {
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: var(--dk-purple);
-      font-family: 'Nunito', sans-serif;
-      margin-bottom: 2px;
-    }
-    .lp-subtitle {
-      font-size: 0.8rem;
-      color: #9ca3af;
-      font-weight: 600;
-    }
-    .lp-progress-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .lp-progress-bar-wrap {
-      flex: 1;
-      height: 7px;
-      background: #f3f4f6;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .lp-progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--dk-purple), var(--dk-purple2));
-      border-radius: 99px;
-      width: 53%; /* 8/15 */
-      box-shadow: 0 0 6px rgba(124,58,237,0.35);
-    }
-    .lp-progress-label {
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--dk-purple);
-      white-space: nowrap;
-      font-family: 'Nunito', sans-serif;
-    }
-
-    /* Section heading */
-    .lp-section-label {
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #9ca3af;
-      margin: 20px 0 10px;
-      font-family: 'Nunito', sans-serif;
-    }
-
-    /* Vertical node list */
-    .lp-nodes {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-    }
-
-    /* The vertical connecting line */
-    .lp-nodes::before {
-      content: '';
-      position: absolute;
-      left: 21px;
-      top: 22px;
-      bottom: 22px;
-      width: 2px;
-      background: linear-gradient(to bottom, rgba(124,58,237,0.25), rgba(124,58,237,0.05));
-      border-radius: 99px;
-      z-index: 0;
-    }
-
-    .lp-node {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 10px 12px 10px 0;
-      border-radius: 14px;
-      transition: var(--dk-transition);
-      cursor: pointer;
-      position: relative;
-      z-index: 1;
-    }
-    .lp-node:hover { background: rgba(124,58,237,0.04); }
-    .lp-node.locked { opacity: 0.5; pointer-events: none; }
-
-    .lp-node-icon {
-      width: 44px; height: 44px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      font-size: 18px;
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-      position: relative;
-      z-index: 1;
-    }
-    .lp-node-icon.done    { background: linear-gradient(135deg, var(--dk-purple), var(--dk-purple2)); }
-    .lp-node-icon.current { background: linear-gradient(135deg, #f59e0b, #f97316); animation: badgePulse 2s ease-in-out infinite; }
-    .lp-node-icon.boss    { background: linear-gradient(135deg, #ef4444, #dc2626); }
-    .lp-node-icon.locked  { background: linear-gradient(135deg, #e5e7eb, #d1d5db); color: #9ca3af; box-shadow: none; }
-
-    .lp-node-body { flex: 1; min-width: 0; }
-    .lp-node-name {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: #1f2937;
-      font-family: 'Nunito', sans-serif;
-      display: block;
-      margin-bottom: 2px;
-    }
-    .lp-node.locked .lp-node-name { color: #9ca3af; }
-    .lp-node-meta {
-      font-size: 0.75rem;
-      color: #9ca3af;
-      font-weight: 600;
-    }
-
-    .lp-node-status {
-      flex-shrink: 0;
-      font-size: 0.72rem;
-      font-weight: 800;
-      font-family: 'Nunito', sans-serif;
-      padding: 4px 10px;
-      border-radius: 99px;
-    }
-    .lp-node-status.done    { background: rgba(124,58,237,0.1); color: var(--dk-purple); }
-    .lp-node-status.current { background: linear-gradient(135deg,#fef3c7,#fde68a); color: #b45309; border: 1px solid #fde68a; }
-    .lp-node-status.locked  { background: #f3f4f6; color: #9ca3af; }
-    .lp-node-status.boss    { background: linear-gradient(135deg,#fee2e2,#fecaca); color: #dc2626; border: 1px solid #fca5a5; }
-
-    /* Section divider connector */
-    .lp-section-divider {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 8px 0;
-      padding-left: 0;
-    }
-    .lp-section-divider-line {
-      flex: 1;
-      height: 1px;
-      background: rgba(124,58,237,0.1);
-    }
-    .lp-section-divider-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(124,58,237,0.2);
-      flex-shrink: 0;
-    }
-
-    /* ── RIGHT COLUMN – Leaderboard only ── */
-    .lb-card { padding: 20px 20px 16px; }
-
-    /* ── Daily Goal card ── */
-    .daily-goal-card {
-      background: var(--dk-card);
-      border-radius: var(--dk-radius);
-      border: 1.5px solid rgba(124,58,237,0.08);
-      box-shadow: var(--dk-shadow);
-      padding: 18px 20px;
-    }
-    .daily-goal-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 10px;
-    }
-    .daily-goal-title {
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #9ca3af;
-      font-family: 'Nunito', sans-serif;
-    }
-    .daily-goal-val {
-      font-size: 0.88rem;
-      font-weight: 900;
-      color: var(--dk-purple);
-      font-family: 'Nunito', sans-serif;
-    }
-    .daily-goal-bar-wrap {
-      height: 8px;
-      background: #f3f4f6;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .daily-goal-bar-fill {
-      height: 100%;
-      width: 40%;
-      background: linear-gradient(90deg, var(--dk-green), #059669);
-      border-radius: 99px;
-      box-shadow: 0 0 6px rgba(16,185,129,0.4);
-    }
-    .daily-goal-label {
-      font-size: 0.75rem;
-      color: #9ca3af;
-      font-weight: 600;
-      margin-top: 6px;
-    }
-
-    /* ── Achievements card ── */
-    .achievements-card {
-      background: var(--dk-card);
-      border-radius: var(--dk-radius);
-      border: 1.5px solid rgba(124,58,237,0.08);
-      box-shadow: var(--dk-shadow);
-      padding: 18px 20px;
-    }
-    .achievements-title {
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #9ca3af;
-      font-family: 'Nunito', sans-serif;
-      margin-bottom: 12px;
-    }
-    .achievements-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .achievement-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      padding: 12px 8px;
-      border-radius: 14px;
-      border: 1.5px solid rgba(124,58,237,0.08);
-      background: #fafafa;
-      cursor: pointer;
-      transition: var(--dk-transition);
-    }
-    .achievement-item:hover { background: rgba(124,58,237,0.04); border-color: rgba(124,58,237,0.2); }
-    .achievement-item.locked { opacity: 0.45; }
-    .achievement-icon {
-      font-size: 22px;
-    }
-    .achievement-icon.earned { color: var(--dk-purple); }
-    .achievement-icon.locked { color: #d1d5db; }
-    .achievement-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #374151;
-      text-align: center;
-      font-family: 'Nunito', sans-serif;
-    }
-    .achievement-item.locked .achievement-label { color: #9ca3af; }
-
-    /* ── Settings panel ── */
-    .settings-panel {
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .settings-panel.active { display: flex; }
-
-    .settings-card {
-      background: var(--dk-card);
-      border-radius: var(--dk-radius);
-      border: 1.5px solid rgba(124,58,237,0.08);
-      box-shadow: var(--dk-shadow);
-      padding: 20px;
-    }
-    .settings-section-title {
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #9ca3af;
-      font-family: 'Nunito', sans-serif;
-      margin-bottom: 14px;
-    }
-    .settings-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(124,58,237,0.06);
-    }
-    .settings-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .settings-row-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.87rem;
-      font-weight: 700;
-      color: #374151;
-    }
-    .settings-row-label i {
-      width: 20px;
-      text-align: center;
-      color: var(--dk-purple);
-      font-size: 14px;
-    }
-    /* Toggle switch */
-    .toggle {
-      position: relative;
-      width: 40px; height: 22px;
-      flex-shrink: 0;
-    }
-    .toggle input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background: #e5e7eb;
-      border-radius: 99px;
-      transition: var(--dk-transition);
-    }
-    .toggle-slider::before {
-      content: '';
-      position: absolute;
-      width: 16px; height: 16px;
-      left: 3px; bottom: 3px;
-      background: #fff;
-      border-radius: 50%;
-      transition: var(--dk-transition);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-    }
-    .toggle input:checked + .toggle-slider { background: var(--dk-purple); }
-    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
-
-    .settings-select {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--dk-purple);
-      border: 1.5px solid rgba(124,58,237,0.2);
-      background: rgba(124,58,237,0.06);
-      border-radius: 8px;
-      padding: 4px 8px;
-      font-family: 'Nunito', sans-serif;
-      cursor: pointer;
-    }
-
-    /* ── Progress panel ── */
-    .progress-panel {
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .progress-panel.active { display: flex; }
-
-    .progress-stat-card {
-      background: var(--dk-card);
-      border-radius: var(--dk-radius);
-      border: 1.5px solid rgba(124,58,237,0.08);
-      box-shadow: var(--dk-shadow);
-      padding: 20px;
-    }
-    .progress-stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 0;
-    }
-    .progress-stat-item {
-      background: rgba(124,58,237,0.04);
-      border-radius: 14px;
-      padding: 16px 12px;
-      text-align: center;
-      border: 1.5px solid rgba(124,58,237,0.08);
-    }
-    .progress-stat-num {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--dk-purple);
-      font-family: 'Nunito', sans-serif;
-      display: block;
-    }
-    .progress-stat-lbl {
-      font-size: 0.73rem;
-      color: #9ca3af;
-      font-weight: 700;
-    }
-    .progress-bar-item {
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(124,58,237,0.06);
-    }
-    .progress-bar-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .progress-bar-label-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #374151;
-    }
-    .progress-bar-label-row span:last-child {
-      color: var(--dk-purple);
-    }
-    .progress-bar-bg {
-      height: 7px;
-      background: #f3f4f6;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .progress-bar-fg {
-      height: 100%;
-      border-radius: 99px;
-    }
-    .progress-bar-fg.purple { background: linear-gradient(90deg, var(--dk-purple), var(--dk-purple2)); box-shadow: 0 0 6px rgba(124,58,237,0.35); }
-    .progress-bar-fg.teal   { background: linear-gradient(90deg, var(--dk-teal), #0891b2); box-shadow: 0 0 6px rgba(20,184,166,0.35); }
-    .progress-bar-fg.gold   { background: linear-gradient(90deg, var(--dk-gold), var(--dk-orange)); box-shadow: 0 0 6px rgba(245,158,11,0.35); }
-
-    /* ── Middle content panels ── */
-    .mid-panel { display: none; flex-direction: column; gap: 16px; }
-    .mid-panel.active { display: flex; }
-
-    /* ── Leaderboard full-view: hide right column ── */
-    .dash-grid.hide-right .dash-col--right {
-      display: none;
-    }
-    .dash-grid.hide-right {
-      grid-template-columns: 240px 1fr;
-      grid-template-areas: "left mid";
-    }
-
-    /* ── Podium ── */
-    .lb-podium {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 12px;
-      background: linear-gradient(180deg, rgba(124,58,237,0.04) 0%, transparent 100%);
-      border-radius: 16px;
-      padding: 20px 16px 0;
-      border: 1.5px solid rgba(124,58,237,0.08);
-    }
-    .lb-podium-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      flex: 1;
-    }
-    .lb-podium-avatar {
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      border: 3px solid rgba(124,58,237,0.2);
-      object-fit: cover;
-      margin-bottom: 4px;
-    }
-    .lb-podium-1 .lb-podium-avatar { width: 64px; height: 64px; border-color: var(--dk-gold); box-shadow: 0 4px 16px rgba(245,158,11,0.3); }
-    .lb-podium-2 .lb-podium-avatar { border-color: #9ca3af; }
-    .lb-podium-3 .lb-podium-avatar { border-color: #cd7c2f; }
-    .lb-podium-rank {
-      width: 26px; height: 26px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; margin-bottom: 4px;
-    }
-    .lb-podium-name {
-      font-size: 0.78rem; font-weight: 800;
-      font-family: 'Nunito', sans-serif;
-      text-align: center; color: #1f2937;
-    }
-    .lb-podium-xp {
-      font-size: 0.72rem; color: #9ca3af; font-weight: 600;
-    }
-    .lb-podium-lv {
-      font-size: 0.72rem; font-weight: 800; color: var(--dk-purple);
-      margin-bottom: 8px;
-    }
-    .lb-podium-bar {
-      width: 100%;
-      border-radius: 8px 8px 0 0;
-    }
-    .lb-podium-1 .lb-podium-bar { background: linear-gradient(180deg, rgba(245,158,11,0.25), rgba(245,158,11,0.1)); }
-    .lb-podium-2 .lb-podium-bar { background: linear-gradient(180deg, rgba(156,163,175,0.25), rgba(156,163,175,0.1)); }
-    .lb-podium-3 .lb-podium-bar { background: linear-gradient(180deg, rgba(205,124,47,0.25), rgba(205,124,47,0.1)); }
-
-    /* ── Full leaderboard list with XP bar ── */
-    .lb-list-full .lb-item {
-      padding: 10px 12px;
-    }
-    .lb-xp-bar-wrap {
-      flex: 1;
-      height: 5px;
-      background: #f3f4f6;
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 0 10px;
-    }
-    .lb-xp-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--dk-purple), var(--dk-purple2));
-      border-radius: 99px;
-    }
-    .lb-xp-bar-fill.you-bar {
-      background: linear-gradient(90deg, var(--dk-gold), var(--dk-orange));
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 1100px) {
-      .dash-grid {
-        grid-template-columns: 220px 1fr 290px;
-      }
-      .dash-grid.hide-right {
-        grid-template-columns: 220px 1fr;
-      }
-    }
-    @media (max-width: 900px) {
-      .dash-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-          "left right"
-          "mid  mid";
-      }
-    }
-    @media (max-width: 640px) {
-      .dash-grid {
-        grid-template-columns: 1fr;
-        grid-template-areas: "left" "mid" "right";
-      }
-    }
-  </style>
 </head>
 <body class="dash-body">
 
@@ -746,10 +139,17 @@
             <i class="fas fa-chart-line"></i>
             Progress
           </button>
+           <button class="sidebar-nav-item " data-panel="advisor" onclick="switchPanel('advisor', this)">
+            <i class="fas fa-robot"></i>
+            Advisor
+          </button>
           <button class="sidebar-nav-item" data-panel="settings" onclick="switchPanel('settings', this)">
             <i class="fas fa-gear"></i>
             Settings
           </button>
+          
+          
+         
         </nav>
 
       </aside>
@@ -761,6 +161,7 @@
         <div class="mid-panel active" id="panel-learning-path">
 
           <div class="learning-path-card reveal">
+            <!-- Header -->
             <div class="lp-header">
               <h2 class="lp-title">Python Learning Path</h2>
               <p class="lp-subtitle">Kids Track — Section 2 of 5</p>
@@ -772,132 +173,102 @@
               </div>
             </div>
 
-            <!-- SECTION 1 -->
-            <p class="lp-section-label">Section 1 — The Basics</p>
-            <div class="lp-nodes">
+            <!-- Snake path map -->
+            <div class="lp-path-map">
 
-              <div class="lp-node reveal">
-                <div class="lp-node-icon done"><i class="fas fa-x"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Variables</span>
-                  <span class="lp-node-meta">Lesson · 5 min</span>
+              <!-- ── Section 1 – The Basics ── -->
+              <div class="lp-section-block">
+                <div class="lp-section-header">
+                  <span class="lp-section-label">Section 1 — The Basics</span>
+                  <span class="lp-section-done-pill">Complete</span>
                 </div>
-                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
+                <div class="lp-snake-wrap">
+                  <svg class="lp-snake-svg" viewBox="0 0 300 300" preserveAspectRatio="none">
+                    <path class="lp-snake-path done" d="M 44,28 C 256,28 256,60 256,98 C 256,144 44,144 44,182 C 44,224 256,224 256,264"/>
+                  </svg>
+                  <div class="lp-snode lp-snode-n1">
+                    <div class="lp-snode-icon done"><i class="fas fa-code"></i></div>
+                    <span class="lp-snode-label">Variables</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n2">
+                    <div class="lp-snode-icon done"><i class="fas fa-terminal"></i></div>
+                    <span class="lp-snode-label">Print &amp; Input</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n3">
+                    <div class="lp-snode-icon done"><i class="fas fa-calculator"></i></div>
+                    <span class="lp-snode-label">Operators</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n4">
+                    <div class="lp-snode-icon boss done"><i class="fas fa-dragon"></i></div>
+                    <span class="lp-snode-label boss-lbl">Boss Fight</span>
+                  </div>
+                </div>
               </div>
 
-              <div class="lp-node reveal">
-                <div class="lp-node-icon done"><i class="fas fa-print"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Print &amp; Input</span>
-                  <span class="lp-node-meta">Lesson · 6 min</span>
+              <div class="lp-section-connector done"></div>
+
+              <!-- ── Section 2 – Control Flow ── -->
+              <div class="lp-section-block">
+                <div class="lp-section-header">
+                  <span class="lp-section-label">Section 2 — Control Flow</span>
                 </div>
-                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
+                <div class="lp-snake-wrap">
+                  <svg class="lp-snake-svg" viewBox="0 0 300 300" preserveAspectRatio="none">
+                    <path class="lp-snake-path done"   d="M 44,28 C 256,28 256,60 256,98"/>
+                    <path class="lp-snake-path active" d="M 256,98 C 256,144 44,144 44,182"/>
+                    <path class="lp-snake-path locked" d="M 44,182 C 44,224 256,224 256,264"/>
+                  </svg>
+                  <div class="lp-snode lp-snode-n1">
+                    <div class="lp-snode-icon done"><i class="fas fa-code-branch"></i></div>
+                    <span class="lp-snode-label">If / Else</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n2">
+                    <div class="lp-snode-icon active"><i class="fas fa-sync-alt"></i></div>
+                    <span class="lp-snode-label active-lbl">Loops</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n3">
+                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <span class="lp-snode-label">Nested Logic</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n4">
+                    <div class="lp-snode-icon boss locked"><i class="fas fa-lock"></i></div>
+                    <span class="lp-snode-label">Boss Fight</span>
+                  </div>
+                </div>
               </div>
 
-              <div class="lp-node reveal">
-                <div class="lp-node-icon done"><i class="fas fa-calculator"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Operators</span>
-                  <span class="lp-node-meta">Lesson · 5 min</span>
+              <div class="lp-section-connector locked"></div>
+
+              <!-- ── Section 3 – Functions ── -->
+              <div class="lp-section-block">
+                <div class="lp-section-header">
+                  <span class="lp-section-label">Section 3 — Functions</span>
                 </div>
-                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
+                <div class="lp-snake-wrap">
+                  <svg class="lp-snake-svg" viewBox="0 0 300 300" preserveAspectRatio="none">
+                    <path class="lp-snake-path locked" d="M 44,28 C 256,28 256,60 256,98 C 256,144 44,144 44,182 C 44,224 256,224 256,264"/>
+                  </svg>
+                  <div class="lp-snode lp-snode-n1">
+                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <span class="lp-snode-label">Defining</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n2">
+                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <span class="lp-snode-label">Parameters</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n3">
+                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <span class="lp-snode-label">Scope</span>
+                  </div>
+                  <div class="lp-snode lp-snode-n4">
+                    <div class="lp-snode-icon boss locked"><i class="fas fa-lock"></i></div>
+                    <span class="lp-snode-label">Boss Fight</span>
+                  </div>
+                </div>
               </div>
 
-              <div class="lp-node reveal">
-                <div class="lp-node-icon boss"><i class="fas fa-skull-crossbones"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Boss Fight</span>
-                  <span class="lp-node-meta">Challenge · 10 min</span>
-                </div>
-                <span class="lp-node-status boss">Boss</span>
-              </div>
-
-            </div>
-
-            <!-- SECTION 2 -->
-            <p class="lp-section-label">Section 2 — Control Flow</p>
-            <div class="lp-nodes">
-
-              <div class="lp-node reveal">
-                <div class="lp-node-icon done"><i class="fas fa-code-branch"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">If / Else</span>
-                  <span class="lp-node-meta">Lesson · 7 min</span>
-                </div>
-                <span class="lp-node-status done"><i class="fas fa-check"></i> Done</span>
-              </div>
-
-              <div class="lp-node reveal">
-                <div class="lp-node-icon current"><i class="fas fa-infinity"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Loops</span>
-                  <span class="lp-node-meta">Lesson · 8 min</span>
-                </div>
-                <span class="lp-node-status current">In Progress</span>
-              </div>
-
-              <div class="lp-node locked reveal">
-                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Nested Logic</span>
-                  <span class="lp-node-meta">Lesson · 9 min</span>
-                </div>
-                <span class="lp-node-status locked">Locked</span>
-              </div>
-
-              <div class="lp-node locked reveal">
-                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Boss Fight</span>
-                  <span class="lp-node-meta">Challenge · 12 min</span>
-                </div>
-                <span class="lp-node-status locked">Locked</span>
-              </div>
-
-            </div>
-
-            <!-- SECTION 3 -->
-            <p class="lp-section-label">Section 3 — Functions</p>
-            <div class="lp-nodes">
-
-              <div class="lp-node locked reveal">
-                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Defining Functions</span>
-                  <span class="lp-node-meta">Lesson · 8 min</span>
-                </div>
-                <span class="lp-node-status locked">Locked</span>
-              </div>
-
-              <div class="lp-node locked reveal">
-                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Parameters</span>
-                  <span class="lp-node-meta">Lesson · 7 min</span>
-                </div>
-                <span class="lp-node-status locked">Locked</span>
-              </div>
-
-              <div class="lp-node locked reveal">
-                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Scope</span>
-                  <span class="lp-node-meta">Lesson · 6 min</span>
-                </div>
-                <span class="lp-node-status locked">Locked</span>
-              </div>
-
-              <div class="lp-node locked reveal">
-                <div class="lp-node-icon locked"><i class="fas fa-lock"></i></div>
-                <div class="lp-node-body">
-                  <span class="lp-node-name">Boss Fight</span>
-                  <span class="lp-node-meta">Challenge · 15 min</span>
-                </div>
-                <span class="lp-node-status locked">Locked</span>
-              </div>
-
-            </div>
-          </div>
+            </div><!-- end lp-path-map -->
+          </div><!-- end learning-path-card -->
 
         </div><!-- end panel-learning-path -->
 
@@ -1205,6 +576,187 @@
 
         </div><!-- end panel-settings -->
 
+        <!-- ══════════════════════════════════════════════
+             ADVISOR PANEL
+        ══════════════════════════════════════════════ -->
+        <div class="mid-panel" id="panel-advisor">
+          <div class="advisor-layout reveal visible">
+
+            <!-- LEFT: Task + Sandbox + Output -->
+            <div class="advisor-left">
+
+              <!-- Task Card (Image 1 style) -->
+              <div class="adv-task-card">
+                <div class="adv-task-topbar">
+                  <span class="adv-current-task-pill"><i class="fas fa-bolt"></i> CURRENT TASK</span>
+                  <span class="adv-xp-pill">+30 XP</span>
+                </div>
+                <h2 class="adv-task-title">Build a number guessing game</h2>
+                <p class="adv-task-desc">Write a Python program that picks a random number 1–100 and lets the user guess until they find it. Give higher/lower hints after each attempt.</p>
+
+                <ul class="adv-checklist" id="advChecklist">
+                  <li class="adv-check done"><i class="fas fa-check-circle"></i><span>Import random module</span></li>
+                  <li class="adv-check done"><i class="fas fa-check-circle"></i><span>Create guessing_game() function</span></li>
+                  <li class="adv-check"><span class="adv-check-num">3</span><span>Build the while loop for guessing</span></li>
+                  <li class="adv-check"><span class="adv-check-num">4</span><span>Add higher / lower hints</span></li>
+                  <li class="adv-check"><span class="adv-check-num">5</span><span>Count attempts and show final score</span></li>
+                </ul>
+
+                <div class="adv-tags">
+                  <span class="adv-tag">Loops</span>
+                  <span class="adv-tag active-tag">Beginner</span>
+                  <span class="adv-tag">Functions</span>
+                  <span class="adv-tag">Random</span>
+                </div>
+              </div>
+
+              <!-- Sandbox (Image 2 style) -->
+              <div class="adv-sandbox">
+                <div class="adv-sandbox-bar">
+                  <div class="adv-sandbox-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                  </div>
+                  <span class="adv-sandbox-filename">main.py</span>
+                  <button class="adv-run-btn" id="advRunBtn">
+                    <i class="fas fa-play"></i> Run
+                  </button>
+                </div>
+                <div class="adv-code-editor" id="advCodeEditor" contenteditable="true" spellcheck="false"><pre><span class="tok-kw">import</span> <span class="tok-mod">random</span>
+
+<span class="tok-kw">def</span> <span class="tok-fn">guessing_game</span>():
+    secret <span class="tok-op">=</span> random.<span class="tok-fn">randint</span>(<span class="tok-num">1</span>, <span class="tok-num">100</span>)
+    attempts <span class="tok-op">=</span> <span class="tok-num">0</span>
+
+    <span class="tok-cm"># TODO: build the while loop here</span>
+    <span class="tok-kw">while</span> <span class="tok-kw">True</span>:
+        guess <span class="tok-op">=</span> <span class="tok-fn">int</span>(<span class="tok-fn">input</span>(<span class="tok-str">"Guess: "</span>))
+        attempts <span class="tok-op">+=</span> <span class="tok-num">1</span>
+        <span class="tok-cm">    # hints missing...</span>
+
+<span class="tok-fn">guessing_game</span>()</pre></div>
+              </div>
+
+              <!-- Output (Image 2 style) -->
+              <div class="adv-output">
+                <div class="adv-output-bar">
+                  <span class="adv-output-label"><i class="fas fa-terminal"></i> output</span>
+                  <span class="adv-output-status running" id="advOutputStatus">● running</span>
+                </div>
+                <div class="adv-output-body" id="advOutputBody">
+                  <div class="adv-out-line cmd">$ python main.py</div>
+                  <div class="adv-out-line in">&gt; Guess: 50</div>
+                  <div class="adv-out-line err">! No hint — add your if/else block</div>
+                  <div class="adv-out-line in">&gt; Guess: 75</div>
+                  <div class="adv-out-line err">! No hint — add your if/else block</div>
+                  <div class="adv-out-line cursor-blink">&gt;</div>
+                </div>
+              </div>
+
+            </div><!-- end advisor-left -->
+
+            <!-- RIGHT: EVA Chatbot (Image 1 style) -->
+            <div class="adv-chat-panel">
+
+              <!-- Chat header -->
+              <div class="adv-chat-header">
+                <div class="adv-eva-avatar">
+                  <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
+                </div>
+                <div class="adv-eva-info">
+                  <h3 class="adv-eva-name">EVA — Python Advisor</h3>
+                  <p class="adv-eva-sub">Hints only. Never gives answers.</p>
+                </div>
+                <span class="adv-online-pill"><span class="adv-online-dot"></span> Online</span>
+              </div>
+
+              <!-- EVA rule banner -->
+              <div class="adv-rule-banner">
+                <i class="fas fa-lightbulb adv-rule-icon"></i>
+                <p><strong>EVA's rule:</strong> She will never write your code. She asks questions, gives analogies, and nudges you in the right direction — the thinking is yours.</p>
+              </div>
+
+              <!-- Quick action chips -->
+              <div class="adv-quick-chips">
+                <button class="adv-chip" data-msg="I'm stuck"><i class="fas fa-circle-question"></i> I'm stuck</button>
+                <button class="adv-chip" data-msg="What's a while loop?"><i class="fas fa-magnifying-glass"></i> What's a while loop?</button>
+                <button class="adv-chip" data-msg="Why no output?"><i class="fas fa-triangle-exclamation"></i> Why no output?</button>
+                <button class="adv-chip" data-msg="Give me a strategy"><i class="fas fa-chess"></i> Give me a strategy</button>
+              </div>
+
+              <!-- Messages -->
+              <div class="adv-chat-messages" id="advChatMessages">
+                <div class="adv-msg eva">
+                  <div class="adv-msg-avatar">
+                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
+                  </div>
+                  <div class="adv-msg-bubble">
+                    <p class="adv-msg-sender">EVA</p>
+                    <p>🤝 <strong>Welcome! Let's think together.</strong></p>
+                    <p>I can see your loop is running but nothing happens after a guess. What do you think your code should <em>check</em> after the user types a number?</p>
+                  </div>
+                </div>
+
+                <div class="adv-msg user">
+                  <div class="adv-msg-bubble user-bubble">
+                    <p>I think it should check if the guess is correct?</p>
+                  </div>
+                  <span class="adv-msg-meta">Me</span>
+                </div>
+
+                <div class="adv-msg eva">
+                  <div class="adv-msg-avatar">
+                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
+                  </div>
+                  <div class="adv-msg-bubble">
+                    <p>Exactly right! And what are the <em>three possible outcomes</em> when you compare two numbers? Think about it like a weighing scale — what can happen?</p>
+                    <blockquote class="adv-hint-block">
+                      <i class="fas fa-lightbulb"></i> Hint: there's not just "correct" and "wrong" — there's a third possibility between those two.
+                    </blockquote>
+                  </div>
+                </div>
+
+                <div class="adv-msg user">
+                  <div class="adv-msg-bubble user-bubble">
+                    <p>Oh — too high, too low, or exactly right!</p>
+                  </div>
+                  <span class="adv-msg-meta">Me</span>
+                </div>
+
+                <div class="adv-msg eva">
+                  <div class="adv-msg-avatar">
+                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
+                  </div>
+                  <div class="adv-msg-bubble">
+                    <p>🎯 <strong>You've got the logic!</strong></p>
+                    <p>Now — which Python statement lets you check multiple conditions like that? You've already used it in Section 2 of your learning path.</p>
+                  </div>
+                </div>
+
+                <div class="adv-msg eva typing-indicator" id="evaTyping" style="display:none">
+                  <div class="adv-msg-avatar">
+                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
+                  </div>
+                  <div class="adv-msg-bubble typing-bubble">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Input bar -->
+              <div class="adv-chat-input-wrap">
+                <input type="text" class="adv-chat-input" id="advChatInput" placeholder="Ask EVA — she'll guide, not solve..."/>
+                <button class="adv-chat-send" id="advChatSend">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+
+            </div><!-- end adv-chat-panel -->
+
+          </div><!-- end advisor-layout -->
+        </div><!-- end panel-advisor -->
+
       </section>
 
       <!-- ─────────────── RIGHT COLUMN ─────────────── -->
@@ -1357,76 +909,6 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script src="dashboard-kids.js"></script>
-  <script>
-    // Panel switcher
-    function switchPanel(panelId, btn) {
-      // Update sidebar nav active state
-      document.querySelectorAll('.sidebar-nav-item').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
 
-      // Hide all mid panels
-      document.querySelectorAll('.mid-panel').forEach(p => p.classList.remove('active'));
-
-      // Show target panel
-      const target = document.getElementById('panel-' + panelId);
-      if (target) {
-        target.classList.add('active');
-        // Re-trigger reveal animations for newly shown panel
-        target.querySelectorAll('.reveal').forEach(el => {
-          el.classList.remove('visible');
-          setTimeout(() => el.classList.add('visible'), 50);
-        });
-        // Re-animate bars inside newly shown panel
-        target.querySelectorAll('.quest-bar-fill[data-pct]').forEach(el => {
-          el.style.width = '0';
-          setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 150);
-        });
-        target.querySelectorAll('.mission-bar-fill[data-pct]').forEach(el => {
-          el.style.width = '0';
-          setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 200);
-        });
-      }
-
-      // Hide / show right column for leaderboard full view
-      const grid = document.querySelector('.dash-grid');
-      if (panelId === 'leaderboard-mid') {
-        grid.classList.add('hide-right');
-      } else {
-        grid.classList.remove('hide-right');
-      }
-    }
-
-    // Tab switcher for quests2 / badges2 panel
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-tab]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const tab = btn.dataset.tab;
-          // Find sibling tabs in same container
-          const tabsContainer = btn.closest('.dash-tabs');
-          if (!tabsContainer) return;
-          tabsContainer.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
-          btn.classList.add('active');
-
-          // Find the panel section (parent of tabs)
-          const section = tabsContainer.closest('.mid-panel') || tabsContainer.closest('.dash-col--mid');
-
-          // Map tab names to panel IDs
-          const panelMap = {
-            'quests':  'panelQuests',
-            'badges':  'panelBadges',
-            'quests2': 'panelQuests2',
-            'badges2': 'panelBadges2',
-          };
-          // Hide all tab panels in scope
-          ['panelQuests','panelBadges','panelQuests2','panelBadges2'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.classList.add('hidden');
-          });
-          const target = document.getElementById(panelMap[tab]);
-          if (target) target.classList.remove('hidden');
-        });
-      });
-    });
-  </script>
 </body>
 </html>

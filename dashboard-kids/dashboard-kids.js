@@ -333,15 +333,6 @@ function removeToast(toast) {
   setTimeout(() => toast.remove(), 320);
 }
 
-
-/* ═══════════════════════════════════════════════
-   KEYBOARD SHORTCUT: press "L" to trigger level-up (demo)
-═══════════════════════════════════════════════ */
-document.addEventListener('keydown', e => {
-  if (e.key === 'l' || e.key === 'L') showLevelUp();
-});
-
-
 /* ═══════════════════════════════════════════════
    PROFILE AVATAR JIGGLE on click
 ═══════════════════════════════════════════════ */
@@ -349,11 +340,202 @@ document.getElementById('profileBtn')?.addEventListener('click', () => {
   showToast('info', 'CodeWizard — Level 19 Intermediate Coder 🧙');
 });
 
+  // Panel switcher
+    function switchPanel(panelId, btn) {
+      // Update sidebar nav active state
+      document.querySelectorAll('.sidebar-nav-item').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
-/* ═══════════════════════════════════════════════
-   IDLE XP DRIP – shows XP toast every 45s (demo)
-═══════════════════════════════════════════════ */
-setInterval(() => {
-  const msgs = ['+10 XP — keep it up!', '+15 XP — nice streak!', '+5 XP — you rock!'];
-  showXPToast(msgs[Math.floor(Math.random() * msgs.length)]);
-}, 45000);
+      // Hide all mid panels
+      document.querySelectorAll('.mid-panel').forEach(p => p.classList.remove('active'));
+
+      // Toggle advisor full-width mode
+      const grid = document.querySelector('.dash-grid');
+      if (grid) grid.classList.toggle('advisor-mode', panelId === 'advisor');
+
+      // Show target panel
+      const target = document.getElementById('panel-' + panelId);
+      if (target) {
+        target.classList.add('active');
+        // Re-trigger reveal animations for newly shown panel
+        target.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('visible');
+          setTimeout(() => el.classList.add('visible'), 50);
+        });
+        // Re-animate bars inside newly shown panel
+        target.querySelectorAll('.quest-bar-fill[data-pct]').forEach(el => {
+          el.style.width = '0';
+          setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 150);
+        });
+        target.querySelectorAll('.mission-bar-fill[data-pct]').forEach(el => {
+          el.style.width = '0';
+          setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 200);
+        });
+      }
+
+      // Hide / show right column for leaderboard full view
+      const gridd = document.querySelector('.dash-grid');
+      if (panelId === 'leaderboard-mid') {
+        gridd.classList.add('hide-right');
+      } else {
+        gridd.classList.remove('hide-right');
+      }
+    }
+
+    // Tab switcher for quests2 / badges2 panel
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.dataset.tab;
+          // Find sibling tabs in same container
+          const tabsContainer = btn.closest('.dash-tabs');
+          if (!tabsContainer) return;
+          tabsContainer.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Find the panel section (parent of tabs)
+          const section = tabsContainer.closest('.mid-panel') || tabsContainer.closest('.dash-col--mid');
+
+          // Map tab names to panel IDs
+          const panelMap = {
+            'quests':  'panelQuests',
+            'badges':  'panelBadges',
+            'quests2': 'panelQuests2',
+            'badges2': 'panelBadges2',
+          };
+          // Hide all tab panels in scope
+          ['panelQuests','panelBadges','panelQuests2','panelBadges2'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+          });
+          const target = document.getElementById(panelMap[tab]);
+          if (target) target.classList.remove('hidden');
+        });
+      });
+    });
+
+/* ═══════════════════════════════════════════════════════════
+   ADVISOR PANEL LOGIC
+═══════════════════════════════════════════════════════════ */
+
+/* ── Grid mode toggle when Advisor is active ── */
+// (handled directly inside switchPanel above)
+
+/* ── EVA chat responses ── */
+const evaResponses = [
+  "Good thinking! What do you suppose happens if the guess is *lower* than the secret number?",
+  "You're on the right track! Remember — Python's `if/elif/else` can handle exactly three outcomes. Sound familiar from Section 2?",
+  "Think about it this way: if I have a number in mind and you guess too low, what should your program *say* to guide you?",
+  "Almost there! What Python keyword creates a loop that keeps running until a condition is false?",
+  "Interesting approach! Can you explain what you expect line 8 to do? Sometimes saying it out loud helps!",
+  "Let's break it down. Step 3 says 'build the while loop' — what condition should make your loop *stop*?",
+  "Great question! Instead of telling you directly, think about the `random` module you already imported. What function would give you a random integer?",
+  "You've already solved harder problems than this! Look at your Section 1 — you used comparison operators there. Which ones might help now?",
+];
+
+let evaIdx = 0;
+
+const chatMessages  = document.getElementById('advChatMessages');
+const chatInput     = document.getElementById('advChatInput');
+const chatSend      = document.getElementById('advChatSend');
+const evaTyping     = document.getElementById('evaTyping');
+
+function appendUserMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'adv-msg user new';
+  div.innerHTML = `
+    <div class="adv-msg-bubble user-bubble"><p>${escHtml(text)}</p></div>
+    <span class="adv-msg-meta">Me</span>`;
+  chatMessages.appendChild(div);
+  scrollChat();
+}
+
+function appendEvaMsg(text) {
+  evaTyping.style.display = 'flex';
+  scrollChat();
+  setTimeout(() => {
+    evaTyping.style.display = 'none';
+    const div = document.createElement('div');
+    div.className = 'adv-msg eva new';
+    div.innerHTML = `
+      <div class="adv-msg-avatar">
+        <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
+      </div>
+      <div class="adv-msg-bubble"><p>${text}</p></div>`;
+    chatMessages.appendChild(div);
+    scrollChat();
+  }, 1200 + Math.random() * 600);
+}
+
+function scrollChat() {
+  if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function sendMessage() {
+  const text = chatInput?.value.trim();
+  if (!text) return;
+  appendUserMsg(text);
+  chatInput.value = '';
+  const reply = evaResponses[evaIdx % evaResponses.length];
+  evaIdx++;
+  appendEvaMsg(reply);
+}
+
+chatSend?.addEventListener('click', sendMessage);
+chatInput?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+/* Quick chips */
+document.querySelectorAll('.adv-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    if (!chatInput) return;
+    chatInput.value = chip.dataset.msg;
+    sendMessage();
+  });
+});
+
+/* ── Run button simulation ── */
+const advRunBtn      = document.getElementById('advRunBtn');
+const advOutputBody  = document.getElementById('advOutputBody');
+const advOutputStatus = document.getElementById('advOutputStatus');
+
+const runOutputLines = [
+  { cls: 'cmd', text: '$ python main.py' },
+  { cls: 'in',  text: '> Guess: 50' },
+  { cls: 'err', text: '! No hint — add your if/else block' },
+  { cls: 'in',  text: '> Guess: 75' },
+  { cls: 'err', text: '! No hint — add your if/else block' },
+  { cls: 'in',  text: '>' },
+];
+
+advRunBtn?.addEventListener('click', () => {
+  advRunBtn.classList.add('running');
+  advRunBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+  advOutputStatus.textContent = '● running';
+  advOutputStatus.className = 'adv-output-status running';
+  advOutputBody.innerHTML = '';
+
+  runOutputLines.forEach((line, i) => {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = `adv-out-line ${line.cls}`;
+      if (i === runOutputLines.length - 1) el.classList.add('cursor-blink');
+      el.textContent = line.text;
+      advOutputBody.appendChild(el);
+      advOutputBody.scrollTop = advOutputBody.scrollHeight;
+    }, 300 + i * 280);
+  });
+
+  setTimeout(() => {
+    advRunBtn.classList.remove('running');
+    advRunBtn.innerHTML = '<i class="fas fa-play"></i> Run';
+    // EVA reacts to the run
+    appendEvaMsg("I can see you ran the code! Your loop starts but doesn't give hints. What condition should you check <em>immediately after</em> the user types a number?");
+  }, 300 + runOutputLines.length * 280 + 400);
+});
+
+/* ── Helper ── */
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
