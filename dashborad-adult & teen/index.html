@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVAOPS – Teen & Adult Hub</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css"/>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <button class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+  <a href="#" class="topbar-logo">
+    <div class="logo-icon"><i class="fa-solid fa-code" style="font-size:0.75rem"></i></div>
+    EVAOPS
+  </a>
+  <nav class="topbar-nav">
+    <a href="#" class="active">Dashboard</a>
+  </nav>
+  <div class="topbar-right">
+    <div class="streak-badge"><i class="fa-solid fa-fire"></i> 14 days</div>
+    <div class="xp-badge"><i class="fa-solid fa-bolt"></i> 11,420 XP</div>
+    <div class="user-chip">
+      <div class="user-avatar-sm">AK</div>
+      <span>Alex K.</span>
+    </div>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-profile">
+    <div class="avatar-initials">
+      AK
+      <div class="level-ring"></div>
+    </div>
+    <h3>Alex K.</h3>
+    <p class="role">Python Developer</p>
+    <div class="level-info">
+      <span class="level-badge">Lv.38</span>
+      <span class="xp-text">11,420 XP</span>
+    </div>
+    <div class="xp-bar-wrap">
+      <div class="xp-bar-fill" id="profileXpBar" style="width:0%;background:var(--gradient1);"></div>
+    </div>
+    <p class="xp-left-text">588 XP to Level 39</p>
+    <div class="stats-row">
+      <div class="stat-chip"><div class="val">#4</div><div class="lbl">Rank</div></div>
+      <div class="stat-chip"><div class="val">247</div><div class="lbl">Solved</div></div>
+      <div class="stat-chip"><div class="val">2</div><div class="lbl">Certs</div></div>
+    </div>
+  </div>
+
+  <p class="nav-section-label">Navigation</p>
+
+  <a class="nav-item active" href="#" onclick="navigateTo('home',this)">
+    <span class="nav-icon"><i class="fa-solid fa-map"></i></span> Learning Path
+  </a>
+  <a class="nav-item" href="#" onclick="navigateTo('leaderboard',this)">
+    <span class="nav-icon"><i class="fa-solid fa-trophy"></i></span> Leaderboard
+  </a>
+  <a class="nav-item" href="#" onclick="navigateTo('challenges',this)">
+    <span class="nav-icon"><i class="fa-solid fa-bullseye-arrow"></i></span> Challenges
+    <span class="nav-badge">3</span>
+  </a>
+  <a class="nav-item" href="#" onclick="navigateTo('progress',this)">
+    <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span> Progress
+  </a>
+  <a class="nav-item" href="#" onclick="navigateTo('compete',this)">
+    <span class="nav-icon"><i class="fa-solid fa-swords"></i></span> 1v1 Compete
+  </a>
+  <a class="nav-item nav-notif" href="#" onclick="navigateTo('eva',this)">
+    <span class="nav-icon"><i class="fa-solid fa-robot"></i></span> EVA Advisor
+    <span class="nav-badge ai">AI</span>
+    <span class="notif-dot"></span>
+  </a>
+  <a class="nav-item" href="#" onclick="navigateTo('certificates',this)">
+    <span class="nav-icon"><i class="fa-solid fa-certificate"></i></span> Certificates
+  </a>
+  <a class="nav-item" href="#" onclick="navigateTo('settings',this)">
+    <span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Settings
+  </a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar-sm" style="width:34px;height:34px;border-radius:50%;background:var(--gradient1);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:white;flex-shrink:0;">AK</div>
+      <div class="info">
+        <div class="name">Alex K.</div>
+        <div class="sub">Profile & Settings</div>
+      </div>
+      <i class="fa-solid fa-gear" style="color:var(--text-muted);font-size:0.85rem;"></i>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ═══════════════ PANEL: HOME (Learning Path) ═══════════════ -->
+  <div class="page-panel active" id="panel-home">
+    <div class="page-header">
+      <h1>Welcome back, Alex K. <i class="fa-solid fa-hand-wave" style="font-size:1.3rem;-webkit-text-fill-color:initial;"></i></h1>
+      <p>Thursday, May 23 &bull; <span style="color:var(--accent3);font-weight:600;"><i class="fa-solid fa-fire"></i> 14-day streak</span> — Keep the momentum going!</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card gold">
+        <div class="stat-card-icon"><i class="fa-solid fa-trophy"></i></div>
+        <div class="stat-card-label">Global Rank</div>
+        <div class="stat-card-value">#4</div>
+        <div class="stat-card-sub">Top 2% globally</div>
+      </div>
+      <div class="stat-card cyan">
+        <div class="stat-card-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="stat-card-label">Total XP</div>
+        <div class="stat-card-value">11,420</div>
+        <div class="stat-card-sub">5% to Lv.39</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-card-icon"><i class="fa-regular fa-clock"></i></div>
+        <div class="stat-card-label">Hours This Week</div>
+        <div class="stat-card-value">12.5h</div>
+        <div class="stat-card-sub"><span class="up">↑ 3.2h</span> vs last week</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-card-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="stat-card-label">Challenges Solved</div>
+        <div class="stat-card-value">247</div>
+        <div class="stat-card-sub">12 this week</div>
+      </div>
+    </div>
+
+    <!-- 3-COL -->
+    <div class="three-col">
+      <!-- LEFT -->
+      <div class="left-col">
+        <div class="card">
+          <div class="skill-card">
+            <h3><i class="fa-solid fa-brain" style="color:var(--accent)"></i> Skill Mastery</h3>
+            <div class="skill-item">
+              <div class="skill-top"><span class="skill-name">Python Core</span><span class="skill-pct" style="color:#a78bfa">82%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="82" style="background:linear-gradient(90deg,#6c63ff,#a78bfa)"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-top"><span class="skill-name">Data Structures</span><span class="skill-pct" style="color:#00d4ff">67%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="67" style="background:linear-gradient(90deg,#00d4ff,#0099cc)"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-top"><span class="skill-name">OOP Patterns</span><span class="skill-pct" style="color:#ffd166">74%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="74" style="background:linear-gradient(90deg,#ffd166,#ff9900)"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-top"><span class="skill-name">Web APIs</span><span class="skill-pct" style="color:#06d6a0">55%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="55" style="background:linear-gradient(90deg,#06d6a0,#00a878)"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-top"><span class="skill-name">Automation</span><span class="skill-pct" style="color:#ff6b9d">88%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="88" style="background:linear-gradient(90deg,#ff6b9d,#ff4444)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="heatmap-card">
+            <h3><i class="fa-solid fa-calendar-days" style="color:var(--accent)"></i> Last 30 Days</h3>
+            <div class="heatmap-grid" id="heatmapGrid"></div>
+            <div class="heatmap-legend"><span>25 active days</span><span>None ● Active</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="certs-card">
+            <h3><i class="fa-solid fa-certificate" style="color:var(--accent)"></i> Certificates</h3>
+            <div class="cert-item">
+              <div class="cert-icon"><i class="fa-brands fa-python"></i></div>
+              <div class="cert-info"><div class="cname">Python Core</div><div class="cdate">Jan 2025</div></div>
+              <span class="cert-badge">Earned</span>
+            </div>
+            <div class="cert-item">
+              <div class="cert-icon"><i class="fa-solid fa-cube"></i></div>
+              <div class="cert-info"><div class="cname">OOP Mastery</div><div class="cdate">Mar 2025</div></div>
+              <span class="cert-badge">Earned</span>
+            </div>
+            <div class="cert-item">
+              <div class="cert-icon"><i class="fa-solid fa-plug"></i></div>
+              <div class="cert-info"><div class="cname">FastAPI Expert</div><div class="cdate">In progress</div></div>
+              <span class="cert-badge prog">50%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER: Learning Path -->
+      <div class="lp-wrap">
+        <div class="lp-header">
+          <h2><i class="fa-solid fa-bolt"></i> Python Learning Path</h2>
+          <p>Teen & Adult Track — Section 2 of 5</p>
+          <div class="lp-progress-bar"><div class="lp-progress-fill" id="lpFill" style="width:0%"></div></div>
+          <div class="lp-progress-text"><span>9 / 15 modules</span><span style="color:var(--accent)">60% Complete</span></div>
+        </div>
+        <div class="lp-tabs">
+          <button class="lp-tab active" onclick="switchLpTab(this,'beginner')">Beginner</button>
+          <button class="lp-tab" onclick="switchLpTab(this,'intermediate')">Intermediate</button>
+          <button class="lp-tab" onclick="switchLpTab(this,'advanced')">Advanced</button>
+        </div>
+        <div class="lp-body" id="lpBody"></div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right-col">
+        <div class="weekly-goal-card">
+          <h3><i class="fa-solid fa-bullseye" style="color:var(--accent)"></i> Weekly Goal <span>3/4</span></h3>
+          <div class="goal-ring-wrap">
+            <svg class="goal-ring" viewBox="0 0 76 76">
+              <circle cx="38" cy="38" r="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+              <circle cx="38" cy="38" r="30" fill="none" stroke="url(#gGrad)" stroke-width="6"
+                stroke-dasharray="188" stroke-dashoffset="47" stroke-linecap="round"
+                transform="rotate(-90 38 38)" id="goalCircle"/>
+              <defs><linearGradient id="gGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#6c63ff"/><stop offset="100%" stop-color="#00d4ff"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="goal-ring-center"><div class="fraction">3/4</div><div class="glabel">goals</div></div>
+          </div>
+          <div class="goal-items">
+            <div class="goal-item done"><span class="gi-icon"><i class="fa-solid fa-circle-check"></i></span> Complete 2 lessons</div>
+            <div class="goal-item done"><span class="gi-icon"><i class="fa-solid fa-circle-check"></i></span> Earn 500 XP</div>
+            <div class="goal-item done"><span class="gi-icon"><i class="fa-solid fa-circle-check"></i></span> Solve a challenge</div>
+            <div class="goal-item"><span class="gi-icon" style="color:var(--text-dim)"><i class="fa-regular fa-circle"></i></span> <span style="color:var(--text-muted)">Finish a project</span></div>
+          </div>
+        </div>
+
+        <div class="lb-mini">
+          <div class="lb-mini-header">
+            <h3><i class="fa-solid fa-ranking-star" style="color:var(--accent4)"></i> Global Ranks</h3>
+            <div class="lb-tabs">
+              <button class="lb-tab active">Week</button>
+              <button class="lb-tab">Month</button>
+              <button class="lb-tab">All</button>
+            </div>
+          </div>
+          <div class="lb-list">
+            <div class="lb-item">
+              <div class="lb-rank" style="color:#ffd166"><i class="fa-solid fa-medal"></i></div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#ff6b9d,#ff4444)">SC</div>
+              <div class="lb-info"><div class="lb-name">SarahCOder</div><div class="lb-level">Lv.42</div></div>
+              <div class="lb-xp">12.4k</div>
+              <div class="lb-trend up">↑+2</div>
+            </div>
+            <div class="lb-item">
+              <div class="lb-rank" style="color:#c0c0c0"><i class="fa-solid fa-medal"></i></div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#06d6a0,#0099cc)">PN</div>
+              <div class="lb-info"><div class="lb-name">PixelNinja</div><div class="lb-level">Lv.41</div></div>
+              <div class="lb-xp">11.8k</div>
+              <div class="lb-trend same">—</div>
+            </div>
+            <div class="lb-item">
+              <div class="lb-rank" style="color:#cd7f32"><i class="fa-solid fa-medal"></i></div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#ffd166,#ff9900)">PP</div>
+              <div class="lb-info"><div class="lb-name">PythonPro</div><div class="lb-level">Lv.39</div></div>
+              <div class="lb-xp">10.3k</div>
+              <div class="lb-trend down">↓-1</div>
+            </div>
+            <div class="lb-item you">
+              <div class="lb-rank" style="color:var(--accent)">4</div>
+              <div class="lb-avatar" style="background:var(--gradient1)">AK</div>
+              <div class="lb-info"><div class="lb-name">Alex K. <span style="font-size:0.58rem;background:rgba(108,99,255,0.2);color:var(--accent);padding:1px 5px;border-radius:4px">YOU</span></div><div class="lb-level">Lv.38</div></div>
+              <div class="lb-xp">11.4k</div>
+              <div class="lb-trend up">↑+3</div>
+            </div>
+          </div>
+          <a href="#" class="lb-see-all" onclick="navigateTo('leaderboard',null);return false">See all rankings <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="chart-row">
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div><h3><i class="fa-solid fa-chart-area" style="color:var(--accent)"></i> Weekly XP Activity</h3><p>XP earned per day this week</p></div>
+          <div class="chart-badges"><span class="chart-badge">3,580 XP</span><span class="chart-badge green"><i class="fa-solid fa-arrow-trend-up fa-xs"></i> +18%</span></div>
+        </div>
+        <div class="chart-canvas-wrap"><canvas id="xpChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div><h3><i class="fa-solid fa-spider-web" style="color:var(--accent)"></i> Skill Radar</h3><p>Current mastery overview</p></div>
+          <div class="chart-badges"><span class="chart-badge">Level 38</span></div>
+        </div>
+        <div class="chart-canvas-wrap"><canvas id="radarChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- GLOBAL LB -->
+    <div class="global-lb">
+      <div class="global-lb-header">
+        <h2><i class="fa-solid fa-earth-americas" style="color:var(--accent2)"></i> Global Leaderboard</h2>
+        <div class="global-lb-tabs">
+          <button class="global-lb-tab active" onclick="switchGlbTab(this)">This Week</button>
+          <button class="global-lb-tab" onclick="switchGlbTab(this)">This Month</button>
+          <button class="global-lb-tab" onclick="switchGlbTab(this)">All Time</button>
+        </div>
+      </div>
+      <div class="glb-table-header">
+        <div>Rank</div><div>Player</div><div class="glb-level-col">Level</div><div>XP</div><div>Trend</div>
+      </div>
+      <div id="glbRows"></div>
+      <a href="#" class="view-full" onclick="navigateTo('leaderboard',null);return false">View full rankings <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-row">
+      <div class="activity-card">
+        <h3><i class="fa-solid fa-bolt-lightning" style="color:var(--accent4)"></i> Recent Activity</h3>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:rgba(6,214,160,0.13);color:var(--green)"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="activity-text"><div class="main-text">Completed "API Builder" challenge</div><div class="time"><i class="fa-regular fa-clock fa-xs"></i> 2 hours ago</div></div>
+          <div class="activity-xp">+150</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:rgba(108,99,255,0.13);color:var(--accent)"><i class="fa-solid fa-arrow-up"></i></div>
+          <div class="activity-text"><div class="main-text">Reached Level 38</div><div class="time"><i class="fa-regular fa-clock fa-xs"></i> 5 hours ago</div></div>
+          <div class="activity-xp"></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:rgba(255,209,102,0.13);color:#ffd166"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="activity-text"><div class="main-text">Earned "Speed Coder" badge</div><div class="time"><i class="fa-regular fa-clock fa-xs"></i> Yesterday</div></div>
+          <div class="activity-xp">+50</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:rgba(0,212,255,0.1);color:var(--accent2)"><i class="fa-solid fa-puzzle-piece"></i></div>
+          <div class="activity-text"><div class="main-text">Solved 3 Data Structure problems</div><div class="time"><i class="fa-regular fa-clock fa-xs"></i> Yesterday</div></div>
+          <div class="activity-xp">+220</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:rgba(255,107,157,0.11);color:var(--accent3)"><i class="fa-solid fa-fire"></i></div>
+          <div class="activity-text"><div class="main-text">14-day streak maintained</div><div class="time"><i class="fa-regular fa-clock fa-xs"></i> 2 days ago</div></div>
+          <div class="activity-xp">+100</div>
+        </div>
+      </div>
+
+      <div class="upnext-card">
+        <h3><i class="fa-solid fa-rocket" style="color:var(--accent)"></i> Up Next</h3>
+        <div class="upnext-item">
+          <div class="upnext-icon"><i class="fa-solid fa-server"></i></div>
+          <div class="upnext-info"><div class="upnext-name">FastAPI Deep Dive</div><div class="upnext-meta">Advanced · 3h estimated</div></div>
+          <div class="upnext-xp">+800 XP</div>
+          <div class="upnext-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="upnext-item">
+          <div class="upnext-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="upnext-info"><div class="upnext-name">Async Python</div><div class="upnext-meta">Intermediate · 2h estimated</div></div>
+          <div class="upnext-xp">+550 XP</div>
+          <div class="upnext-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="upnext-item">
+          <div class="upnext-icon"><i class="fa-solid fa-terminal"></i></div>
+          <div class="upnext-info"><div class="upnext-name">CLI Tools Workshop</div><div class="upnext-meta">Intermediate · 1.5h estimated</div></div>
+          <div class="upnext-xp">+400 XP</div>
+          <div class="upnext-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="upnext-item">
+          <div class="upnext-icon"><i class="fa-solid fa-spider"></i></div>
+          <div class="upnext-info"><div class="upnext-name">Web Scraping Pro</div><div class="upnext-meta">Advanced · 2.5h estimated</div></div>
+          <div class="upnext-xp">+650 XP</div>
+          <div class="upnext-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANEL: LEADERBOARD ═══════════════ -->
+  <div class="page-panel" id="panel-leaderboard">
+    <div class="page-header">
+      <h1><i class="fa-solid fa-trophy" style="color:#ffd166;-webkit-text-fill-color:initial;font-size:1.4rem;"></i> Global Leaderboard</h1>
+      <p>See how you stack up against coders worldwide</p>
+    </div>
+    <div class="lb-panel-filters">
+      <button class="lb-panel-filter active"><i class="fa-solid fa-calendar-week fa-sm"></i> This Week</button>
+      <button class="lb-panel-filter"><i class="fa-solid fa-calendar fa-sm"></i> This Month</button>
+      <button class="lb-panel-filter"><i class="fa-solid fa-infinity fa-sm"></i> All Time</button>
+      <button class="lb-panel-filter"><i class="fa-brands fa-python fa-sm"></i> Python</button>
+      <button class="lb-panel-filter"><i class="fa-solid fa-database fa-sm"></i> DSA</button>
+    </div>
+    <div class="lb-full-card">
+      <div class="lb-full-table-header">
+        <div>Rank</div><div>Player</div><div>Level</div><div>XP</div><div>Challenges</div><div>Trend</div>
+      </div>
+      <div id="lbFullRows"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANEL: CHALLENGES ═══════════════ -->
+  <div class="page-panel" id="panel-challenges">
+    <div class="page-header">
+      <h1><i class="fa-solid fa-bullseye-arrow" style="color:var(--accent3);-webkit-text-fill-color:initial;font-size:1.3rem;"></i> Challenges</h1>
+      <p>Test your skills — 3 new challenges available today</p>
+    </div>
+    <div class="stats-grid" style="margin-bottom:22px">
+      <div class="stat-card green"><div class="stat-card-icon"><i class="fa-solid fa-circle-check"></i></div><div class="stat-card-label">Completed</div><div class="stat-card-value">247</div><div class="stat-card-sub">Total solved</div></div>
+      <div class="stat-card cyan"><div class="stat-card-icon"><i class="fa-solid fa-fire-flame-curved"></i></div><div class="stat-card-label">Win Rate</div><div class="stat-card-value">73%</div><div class="stat-card-sub"><span class="up">↑ 5%</span> this month</div></div>
+      <div class="stat-card purple"><div class="stat-card-icon"><i class="fa-solid fa-bolt"></i></div><div class="stat-card-label">XP from Challenges</div><div class="stat-card-value">8,420</div><div class="stat-card-sub">74% of total XP</div></div>
+      <div class="stat-card gold"><div class="stat-card-icon"><i class="fa-solid fa-star"></i></div><div class="stat-card-label">Best Streak</div><div class="stat-card-value">21</div><div class="stat-card-sub">Consecutive days</div></div>
+    </div>
+    <div class="challenges-grid">
+      <div class="challenge-card hard">
+        <div class="ch-header"><div class="ch-icon"><i class="fa-solid fa-microchip-ai"></i></div><span class="ch-diff">Hard</span></div>
+        <div class="ch-title">Neural Network from Scratch</div>
+        <div class="ch-desc">Build a multi-layer perceptron without external libraries. Implement backpropagation manually.</div>
+        <div class="ch-footer"><span class="ch-xp"><i class="fa-solid fa-bolt fa-xs"></i> +800 XP</span><span class="ch-time"><i class="fa-regular fa-clock fa-xs"></i> ~4h</span></div>
+        <button class="ch-start-btn"><i class="fa-solid fa-play fa-xs"></i> Start Challenge</button>
+      </div>
+      <div class="challenge-card mid">
+        <div class="ch-header"><div class="ch-icon"><i class="fa-solid fa-diagram-project"></i></div><span class="ch-diff">Medium</span></div>
+        <div class="ch-title">Graph Pathfinding</div>
+        <div class="ch-desc">Implement Dijkstra's and A* algorithms. Solve shortest-path problems on weighted graphs.</div>
+        <div class="ch-footer"><span class="ch-xp"><i class="fa-solid fa-bolt fa-xs"></i> +450 XP</span><span class="ch-time"><i class="fa-regular fa-clock fa-xs"></i> ~2h</span></div>
+        <button class="ch-start-btn" style="background:linear-gradient(135deg,#ffd166,#ff9900)"><i class="fa-solid fa-play fa-xs"></i> Start Challenge</button>
+      </div>
+      <div class="challenge-card easy">
+        <div class="ch-header"><div class="ch-icon"><i class="fa-solid fa-list-check"></i></div><span class="ch-diff">Easy</span></div>
+        <div class="ch-title">REST API Builder</div>
+        <div class="ch-desc">Create a fully functional REST API with CRUD operations, authentication, and rate limiting.</div>
+        <div class="ch-footer"><span class="ch-xp"><i class="fa-solid fa-bolt fa-xs"></i> +200 XP</span><span class="ch-time"><i class="fa-regular fa-clock fa-xs"></i> ~1h</span></div>
+        <button class="ch-start-btn" style="background:linear-gradient(135deg,#06d6a0,#00d4ff)"><i class="fa-solid fa-play fa-xs"></i> Start Challenge</button>
+      </div>
+      <div class="challenge-card hard">
+        <div class="ch-header"><div class="ch-icon"><i class="fa-solid fa-lock"></i></div><span class="ch-diff">Hard</span></div>
+        <div class="ch-title">Cryptography Engine</div>
+        <div class="ch-desc">Implement RSA encryption from scratch. Handle key generation, encryption and decryption pipelines.</div>
+        <div class="ch-footer"><span class="ch-xp"><i class="fa-solid fa-bolt fa-xs"></i> +700 XP</span><span class="ch-time"><i class="fa-regular fa-clock fa-xs"></i> ~3.5h</span></div>
+        <button class="ch-start-btn"><i class="fa-solid fa-play fa-xs"></i> Start Challenge</button>
+      </div>
+      <div class="challenge-card mid">
+        <div class="ch-header"><div class="ch-icon"><i class="fa-solid fa-database"></i></div><span class="ch-diff">Medium</span></div>
+        <div class="ch-title">Database Optimizer</div>
+        <div class="ch-desc">Optimize slow SQL queries, design indexes and improve database performance by 10x.</div>
+        <div class="ch-footer"><span class="ch-xp"><i class="fa-solid fa-bolt fa-xs"></i> +380 XP</span><span class="ch-time"><i class="fa-regular fa-clock fa-xs"></i> ~1.5h</span></div>
+        <button class="ch-start-btn" style="background:linear-gradient(135deg,#ffd166,#ff9900)"><i class="fa-solid fa-play fa-xs"></i> Start Challenge</button>
+      </div>
+      <div class="challenge-card easy">
+        <div class="ch-header"><div class="ch-icon"><i class="fa-solid fa-spider"></i></div><span class="ch-diff">Easy</span></div>
+        <div class="ch-title">Web Scraper Bot</div>
+        <div class="ch-desc">Build an intelligent web scraper using BeautifulSoup and Selenium with anti-detection logic.</div>
+        <div class="ch-footer"><span class="ch-xp"><i class="fa-solid fa-bolt fa-xs"></i> +180 XP</span><span class="ch-time"><i class="fa-regular fa-clock fa-xs"></i> ~45min</span></div>
+        <button class="ch-start-btn" style="background:linear-gradient(135deg,#06d6a0,#00d4ff)"><i class="fa-solid fa-play fa-xs"></i> Start Challenge</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANEL: PROGRESS ═══════════════ -->
+  <div class="page-panel" id="panel-progress">
+    <div class="page-header">
+      <h1><i class="fa-solid fa-chart-line" style="color:var(--accent);-webkit-text-fill-color:initial;font-size:1.3rem;"></i> Progress</h1>
+      <p>Detailed breakdown of your learning journey</p>
+    </div>
+    <div class="progress-grid">
+      <div class="prog-chart-card">
+        <h3><i class="fa-solid fa-chart-area" style="color:var(--accent)"></i> Monthly XP Trend</h3>
+        <div style="height:180px;position:relative"><canvas id="progressChart"></canvas></div>
+      </div>
+      <div class="prog-skills-full">
+        <h3><i class="fa-solid fa-brain" style="color:var(--accent)"></i> Skill Breakdown</h3>
+        <div class="prog-skill-item">
+          <div class="prog-skill-top"><span class="prog-skill-name">Python Core</span><span class="prog-skill-pct" style="color:#a78bfa">82%</span></div>
+          <div class="prog-skill-bar"><div class="prog-skill-fill" data-pw="82" style="background:linear-gradient(90deg,#6c63ff,#a78bfa)"></div></div>
+        </div>
+        <div class="prog-skill-item">
+          <div class="prog-skill-top"><span class="prog-skill-name">Data Structures & Algorithms</span><span class="prog-skill-pct" style="color:#00d4ff">67%</span></div>
+          <div class="prog-skill-bar"><div class="prog-skill-fill" data-pw="67" style="background:linear-gradient(90deg,#00d4ff,#0099cc)"></div></div>
+        </div>
+        <div class="prog-skill-item">
+          <div class="prog-skill-top"><span class="prog-skill-name">Object-Oriented Programming</span><span class="prog-skill-pct" style="color:#ffd166">74%</span></div>
+          <div class="prog-skill-bar"><div class="prog-skill-fill" data-pw="74" style="background:linear-gradient(90deg,#ffd166,#ff9900)"></div></div>
+        </div>
+        <div class="prog-skill-item">
+          <div class="prog-skill-top"><span class="prog-skill-name">Web APIs & REST</span><span class="prog-skill-pct" style="color:#06d6a0">55%</span></div>
+          <div class="prog-skill-bar"><div class="prog-skill-fill" data-pw="55" style="background:linear-gradient(90deg,#06d6a0,#00a878)"></div></div>
+        </div>
+        <div class="prog-skill-item">
+          <div class="prog-skill-top"><span class="prog-skill-name">Automation & Scripting</span><span class="prog-skill-pct" style="color:#ff6b9d">88%</span></div>
+          <div class="prog-skill-bar"><div class="prog-skill-fill" data-pw="88" style="background:linear-gradient(90deg,#ff6b9d,#ff4444)"></div></div>
+        </div>
+        <div class="prog-skill-item">
+          <div class="prog-skill-top"><span class="prog-skill-name">Databases & SQL</span><span class="prog-skill-pct" style="color:#a78bfa">48%</span></div>
+          <div class="prog-skill-bar"><div class="prog-skill-fill" data-pw="48" style="background:linear-gradient(90deg,#a78bfa,#6c63ff)"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="milestones-card">
+      <h3><i class="fa-solid fa-star" style="color:#ffd166"></i> Milestones & Badges</h3>
+      <div class="milestone-grid">
+        <div class="milestone-item earned"><div class="mi-icon"><i class="fa-solid fa-fire" style="color:#ff6b9d"></i></div><div class="mi-name">14-Day Streak</div><div class="mi-date">Earned May 23</div></div>
+        <div class="milestone-item earned"><div class="mi-icon"><i class="fa-solid fa-trophy" style="color:#ffd166"></i></div><div class="mi-name">First Boss</div><div class="mi-date">Earned Apr 10</div></div>
+        <div class="milestone-item earned"><div class="mi-icon"><i class="fa-solid fa-bolt" style="color:var(--accent2)"></i></div><div class="mi-name">Speed Coder</div><div class="mi-date">Earned May 22</div></div>
+        <div class="milestone-item earned"><div class="mi-icon"><i class="fa-solid fa-graduation-cap" style="color:var(--accent)"></i></div><div class="mi-name">10 Lessons</div><div class="mi-date">Earned Mar 5</div></div>
+        <div class="milestone-item mi-locked"><div class="mi-icon"><i class="fa-solid fa-lock" style="color:var(--text-dim)"></i></div><div class="mi-name">Century Solver</div><div class="mi-date">Solve 100 challenges</div></div>
+        <div class="milestone-item mi-locked"><div class="mi-icon"><i class="fa-solid fa-lock" style="color:var(--text-dim)"></i></div><div class="mi-name">30-Day Streak</div><div class="mi-date">16 days to go</div></div>
+        <div class="milestone-item mi-locked"><div class="mi-icon"><i class="fa-solid fa-lock" style="color:var(--text-dim)"></i></div><div class="mi-name">Top 10 Global</div><div class="mi-date">6 ranks to climb</div></div>
+        <div class="milestone-item mi-locked"><div class="mi-icon"><i class="fa-solid fa-lock" style="color:var(--text-dim)"></i></div><div class="mi-name">AI Master</div><div class="mi-date">Complete AI track</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANEL: 1v1 COMPETE ═══════════════ -->
+  <div class="page-panel" id="panel-compete">
+    <div class="page-header">
+      <h1><i class="fa-solid fa-swords" style="color:var(--accent3);-webkit-text-fill-color:initial;font-size:1.3rem;"></i> 1v1 Compete</h1>
+      <p>Challenge other coders to real-time battles</p>
+    </div>
+    <div class="compete-hero">
+      <h2><i class="fa-solid fa-swords" style="-webkit-text-fill-color:initial;font-size:1.4rem;color:var(--accent3)"></i> Ready to Battle?</h2>
+      <p>Match with a coder of similar skill level and compete in live coding challenges</p>
+      <button class="compete-btn"><i class="fa-solid fa-play"></i> Find Match Now</button>
+    </div>
+    <div class="compete-stats">
+      <div class="compete-stat"><div class="cv">38</div><div class="cl"><i class="fa-solid fa-swords fa-sm"></i> Total Matches</div></div>
+      <div class="compete-stat"><div class="cv" style="color:var(--green)">28</div><div class="cl"><i class="fa-solid fa-circle-check fa-sm"></i> Wins</div></div>
+      <div class="compete-stat"><div class="cv" style="color:var(--accent3)">10</div><div class="cl"><i class="fa-solid fa-circle-xmark fa-sm"></i> Losses</div></div>
+    </div>
+    <div class="recent-matches">
+      <h3><i class="fa-solid fa-clock-rotate-left" style="color:var(--accent)"></i> Recent Matches</h3>
+      <div class="match-row">
+        <div class="match-vs">
+          <div class="match-avatar" style="background:linear-gradient(135deg,#ff6b9d,#ff4444)">TB</div>
+          <div class="match-name">Tom Briscoe <span style="font-size:0.62rem;color:var(--text-muted)">Lv.36</span></div>
+        </div>
+        <span class="match-result win"><i class="fa-solid fa-crown fa-xs"></i> Win</span>
+        <div class="match-xp">+120 XP</div>
+      </div>
+      <div class="match-row">
+        <div class="match-vs">
+          <div class="match-avatar" style="background:linear-gradient(135deg,#06d6a0,#0099cc)">YT</div>
+          <div class="match-name">Yuki Tanaka <span style="font-size:0.62rem;color:var(--text-muted)">Lv.35</span></div>
+        </div>
+        <span class="match-result win"><i class="fa-solid fa-crown fa-xs"></i> Win</span>
+        <div class="match-xp">+95 XP</div>
+      </div>
+      <div class="match-row">
+        <div class="match-vs">
+          <div class="match-avatar" style="background:linear-gradient(135deg,#ffd166,#ff9900)">SC</div>
+          <div class="match-name">Sarah Chen <span style="font-size:0.62rem;color:var(--text-muted)">Lv.42</span></div>
+        </div>
+        <span class="match-result loss"><i class="fa-solid fa-xmark fa-xs"></i> Loss</span>
+        <div class="match-xp">+20 XP</div>
+      </div>
+      <div class="match-row">
+        <div class="match-vs">
+          <div class="match-avatar" style="background:linear-gradient(135deg,#a78bfa,#6c63ff)">DF</div>
+          <div class="match-name">Dana Flores <span style="font-size:0.62rem;color:var(--text-muted)">Lv.33</span></div>
+        </div>
+        <span class="match-result win"><i class="fa-solid fa-crown fa-xs"></i> Win</span>
+        <div class="match-xp">+85 XP</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANEL: EVA ADVISOR ═══════════════ -->
+  <div class="page-panel" id="panel-eva">
+    <div class="page-header">
+      <h1><i class="fa-solid fa-robot" style="color:var(--accent2);-webkit-text-fill-color:initial;font-size:1.3rem;"></i> EVA Advisor</h1>
+      <p>Your AI-powered learning companion — available 24/7</p>
+    </div>
+    <div class="eva-chat">
+      <div class="eva-chat-header">
+        <div class="eva-avatar"><i class="fa-solid fa-robot"></i></div>
+        <div class="eva-info">
+          <div class="eva-name">EVA — AI Advisor</div>
+          <div class="eva-status">Online & Ready</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button style="background:rgba(255,255,255,0.07);border:1px solid var(--card-border);border-radius:8px;padding:6px 12px;color:var(--text-muted);font-size:0.72rem;cursor:pointer;transition:var(--transition)" onmouseover="this.style.background='rgba(108,99,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'"><i class="fa-solid fa-eraser fa-xs"></i> Clear</button>
+        </div>
+      </div>
+      <div class="eva-messages" id="evaMessages">
+        <div class="msg bot"><div class="msg-bubble"><i class="fa-solid fa-sparkles fa-sm" style="color:var(--accent2);margin-right:4px"></i> Hey Alex! I've analyzed your recent activity. You're crushing it on Automation (88%) but Web APIs could use some work. Want me to create a custom study plan? 🚀</div><div class="msg-time">Just now</div></div>
+        <div class="msg bot"><div class="msg-bubble">Based on your learning pace, you're on track to reach <strong style="color:var(--accent)">Level 40</strong> by end of June. Keep it up! 🎯</div><div class="msg-time">Just now</div></div>
+      </div>
+      <div class="eva-suggestions">
+        <span class="eva-suggestion" onclick="sendSuggestion(this)"><i class="fa-solid fa-map fa-xs"></i> Study plan</span>
+        <span class="eva-suggestion" onclick="sendSuggestion(this)"><i class="fa-solid fa-chart-bar fa-xs"></i> Weak areas</span>
+        <span class="eva-suggestion" onclick="sendSuggestion(this)"><i class="fa-solid fa-lightbulb fa-xs"></i> Daily tip</span>
+        <span class="eva-suggestion" onclick="sendSuggestion(this)"><i class="fa-solid fa-code fa-xs"></i> Code review</span>
+      </div>
+      <div class="eva-input-row">
+        <input class="eva-input" id="evaInput" placeholder="Ask EVA anything about your learning journey..." onkeydown="if(event.key==='Enter')sendEvaMsg()"/>
+        <button class="eva-send" onclick="sendEvaMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANEL: CERTIFICATES ═══════════════ -->
+  <div class="page-panel" id="panel-certificates">
+    <div class="page-header">
+      <h1><i class="fa-solid fa-certificate" style="color:var(--accent4);-webkit-text-fill-color:initial;font-size:1.3rem;"></i> Certificates</h1>
+      <p>Your earned qualifications and ongoing certifications</p>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card earned">
+        <div class="cert-card-icon"><i class="fa-brands fa-python"></i></div>
+        <h3>Python Core</h3>
+        <div class="cert-sub">Fundamentals & Advanced Concepts</div>
+        <span class="cert-status"><i class="fa-solid fa-circle-check fa-xs"></i> Earned Jan 2025</span>
+      </div>
+      <div class="cert-card earned">
+        <div class="cert-card-icon"><i class="fa-solid fa-cube"></i></div>
+        <h3>OOP Mastery</h3>
+        <div class="cert-sub">Object-Oriented Design Patterns</div>
+        <span class="cert-status"><i class="fa-solid fa-circle-check fa-xs"></i> Earned Mar 2025</span>
+      </div>
+      <div class="cert-card progress">
+        <div class="cert-card-icon"><i class="fa-solid fa-server"></i></div>
+        <h3>FastAPI Expert</h3>
+        <div class="cert-sub">Modern API Development</div>
+        <div class="cert-prog-bar"><div class="cert-prog-fill" style="width:50%"></div></div>
+        <span class="cert-status"><i class="fa-solid fa-spinner fa-spin fa-xs"></i> 50% Complete</span>
+      </div>
+      <div class="cert-card locked-c">
+        <div class="cert-card-icon"><i class="fa-solid fa-lock"></i></div>
+        <h3>Data Structures</h3>
+        <div class="cert-sub">Arrays, Trees, Graphs & More</div>
+        <div class="cert-prog-bar"><div class="cert-prog-fill" style="width:67%;background:linear-gradient(90deg,rgba(108,99,255,0.5),rgba(167,139,250,0.5))"></div></div>
+        <span class="cert-status"><i class="fa-solid fa-lock fa-xs"></i> 67% — Locked</span>
+      </div>
+      <div class="cert-card locked-c">
+        <div class="cert-card-icon"><i class="fa-solid fa-brain"></i></div>
+        <h3>Machine Learning</h3>
+        <div class="cert-sub">ML Algorithms & Neural Networks</div>
+        <span class="cert-status"><i class="fa-solid fa-lock fa-xs"></i> Requires Lv.45</span>
+      </div>
+      <div class="cert-card locked-c">
+        <div class="cert-card-icon"><i class="fa-solid fa-cloud"></i></div>
+        <h3>Cloud & DevOps</h3>
+        <div class="cert-sub">AWS, Docker & CI/CD Pipelines</div>
+        <span class="cert-status"><i class="fa-solid fa-lock fa-xs"></i> Requires Lv.50</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANEL: SETTINGS ═══════════════ -->
+  <div class="page-panel" id="panel-settings">
+    <div class="page-header">
+      <h1><i class="fa-solid fa-gear" style="color:var(--accent);-webkit-text-fill-color:initial;font-size:1.3rem;"></i> Settings</h1>
+      <p>Manage your account, notifications and preferences</p>
+    </div>
+    <div class="settings-sections">
+      <div class="settings-nav">
+        <div class="settings-nav-item active" onclick="switchSettingsTab(this,'profile')"><i class="fa-solid fa-user fa-sm"></i> Profile</div>
+        <div class="settings-nav-item" onclick="switchSettingsTab(this,'notifications')"><i class="fa-solid fa-bell fa-sm"></i> Notifications</div>
+        <div class="settings-nav-item" onclick="switchSettingsTab(this,'appearance')"><i class="fa-solid fa-palette fa-sm"></i> Appearance</div>
+        <div class="settings-nav-item" onclick="switchSettingsTab(this,'privacy')"><i class="fa-solid fa-shield fa-sm"></i> Privacy</div>
+      </div>
+      <div class="settings-content">
+        <div id="settings-profile">
+          <div class="settings-card">
+            <h3><i class="fa-solid fa-user-pen" style="color:var(--accent)"></i> Profile Information</h3>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Display Name</div><div class="s-desc">Alex K.</div></div>
+              <button style="background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:8px;padding:6px 14px;font-size:0.73rem;font-weight:600;color:var(--accent);cursor:pointer"><i class="fa-solid fa-pen fa-xs"></i> Edit</button>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Track</div><div class="s-desc">Python Developer — Adult Track</div></div>
+              <button style="background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:8px;padding:6px 14px;font-size:0.73rem;font-weight:600;color:var(--accent);cursor:pointer"><i class="fa-solid fa-pen fa-xs"></i> Change</button>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Email</div><div class="s-desc">alex.k@email.com</div></div>
+              <button style="background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:8px;padding:6px 14px;font-size:0.73rem;font-weight:600;color:var(--accent);cursor:pointer"><i class="fa-solid fa-pen fa-xs"></i> Edit</button>
+            </div>
+          </div>
+          <div class="settings-card">
+            <h3><i class="fa-solid fa-bullseye" style="color:var(--accent)"></i> Learning Goals</h3>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Daily XP Goal</div><div class="s-desc">Target: 200 XP per day</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Weekly Challenge Goal</div><div class="s-desc">4 challenges per week</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+          </div>
+        </div>
+        <div id="settings-notifications" style="display:none">
+          <div class="settings-card">
+            <h3><i class="fa-solid fa-bell" style="color:var(--accent)"></i> Notification Preferences</h3>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Streak Reminders</div><div class="s-desc">Daily reminders to keep your streak alive</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">New Challenges</div><div class="s-desc">Notify when new challenges are available</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">1v1 Match Requests</div><div class="s-desc">Get notified for incoming battle requests</div></div>
+              <label class="toggle"><input type="checkbox"><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Leaderboard Updates</div><div class="s-desc">Weekly rank change summaries</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+          </div>
+        </div>
+        <div id="settings-appearance" style="display:none">
+          <div class="settings-card">
+            <h3><i class="fa-solid fa-palette" style="color:var(--accent)"></i> Appearance</h3>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Compact Mode</div><div class="s-desc">Reduce spacing for more content</div></div>
+              <label class="toggle"><input type="checkbox"><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Animations</div><div class="s-desc">Enable smooth transitions and effects</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Show XP in topbar</div><div class="s-desc">Display current XP count in the header</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+          </div>
+        </div>
+        <div id="settings-privacy" style="display:none">
+          <div class="settings-card">
+            <h3><i class="fa-solid fa-shield-halved" style="color:var(--accent)"></i> Privacy</h3>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Public Profile</div><div class="s-desc">Allow others to view your profile</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Show on Leaderboard</div><div class="s-desc">Appear in global rankings</div></div>
+              <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><div class="s-title">Activity Visibility</div><div class="s-desc">Let others see your recent activity</div></div>
+              <label class="toggle"><input type="checkbox"><div class="toggle-slider"></div></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
