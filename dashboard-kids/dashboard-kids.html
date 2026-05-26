@@ -6,8 +6,10 @@
   <title>Kids Dashboard – EVAOPS Academy</title>
   <link rel="stylesheet" href="../style.css"/>
   <link rel="stylesheet" href="dashboard-kids.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/shift-away.css"/>
 
 </head>
 <body class="dash-body">
@@ -139,17 +141,19 @@
             <i class="fas fa-chart-line"></i>
             Progress
           </button>
-           <button class="sidebar-nav-item " data-panel="advisor" onclick="switchPanel('advisor', this)">
+           <button class="sidebar-nav-item" data-panel="compete" onclick="switchPanel('compete', this)">
+            <i class="fas fa-swords"></i>
+            1v1 Compete
+          </button>
+          <button class="sidebar-nav-item" data-panel="advisor" onclick="switchPanel('advisor', this)">
             <i class="fas fa-robot"></i>
-            Advisor
+            EVA Advisor
+            <span class="advisor-ai-badge">AI</span>
           </button>
           <button class="sidebar-nav-item" data-panel="settings" onclick="switchPanel('settings', this)">
             <i class="fas fa-gear"></i>
             Settings
           </button>
-          
-          
-         
         </nav>
 
       </aside>
@@ -187,19 +191,19 @@
                     <path class="lp-snake-path done" d="M 44,28 C 256,28 256,60 256,98 C 256,144 44,144 44,182 C 44,224 256,224 256,264"/>
                   </svg>
                   <div class="lp-snode lp-snode-n1">
-                    <div class="lp-snode-icon done"><i class="fas fa-code"></i></div>
+                    <div class="lp-snode-icon done" data-node="variables-done"><i class="fas fa-code"></i></div>
                     <span class="lp-snode-label">Variables</span>
                   </div>
                   <div class="lp-snode lp-snode-n2">
-                    <div class="lp-snode-icon done"><i class="fas fa-terminal"></i></div>
+                    <div class="lp-snode-icon done" data-node="print-done"><i class="fas fa-terminal"></i></div>
                     <span class="lp-snode-label">Print &amp; Input</span>
                   </div>
                   <div class="lp-snode lp-snode-n3">
-                    <div class="lp-snode-icon done"><i class="fas fa-calculator"></i></div>
+                    <div class="lp-snode-icon done" data-node="operators-done"><i class="fas fa-calculator"></i></div>
                     <span class="lp-snode-label">Operators</span>
                   </div>
                   <div class="lp-snode lp-snode-n4">
-                    <div class="lp-snode-icon boss done"><i class="fas fa-dragon"></i></div>
+                    <div class="lp-snode-icon boss done" data-node="boss1-done"><i class="fas fa-dragon"></i></div>
                     <span class="lp-snode-label boss-lbl">Boss Fight</span>
                   </div>
                 </div>
@@ -219,19 +223,19 @@
                     <path class="lp-snake-path locked" d="M 44,182 C 44,224 256,224 256,264"/>
                   </svg>
                   <div class="lp-snode lp-snode-n1">
-                    <div class="lp-snode-icon done"><i class="fas fa-code-branch"></i></div>
+                    <div class="lp-snode-icon done" data-node="ifelse-done"><i class="fas fa-code-branch"></i></div>
                     <span class="lp-snode-label">If / Else</span>
                   </div>
                   <div class="lp-snode lp-snode-n2">
-                    <div class="lp-snode-icon active"><i class="fas fa-sync-alt"></i></div>
+                    <div class="lp-snode-icon active" data-node="loops-active"><i class="fas fa-sync-alt"></i></div>
                     <span class="lp-snode-label active-lbl">Loops</span>
                   </div>
                   <div class="lp-snode lp-snode-n3">
-                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <div class="lp-snode-icon locked" data-node="nested-locked"><i class="fas fa-lock"></i></div>
                     <span class="lp-snode-label">Nested Logic</span>
                   </div>
                   <div class="lp-snode lp-snode-n4">
-                    <div class="lp-snode-icon boss locked"><i class="fas fa-lock"></i></div>
+                    <div class="lp-snode-icon boss locked" data-node="boss2-locked"><i class="fas fa-lock"></i></div>
                     <span class="lp-snode-label">Boss Fight</span>
                   </div>
                 </div>
@@ -249,19 +253,19 @@
                     <path class="lp-snake-path locked" d="M 44,28 C 256,28 256,60 256,98 C 256,144 44,144 44,182 C 44,224 256,224 256,264"/>
                   </svg>
                   <div class="lp-snode lp-snode-n1">
-                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <div class="lp-snode-icon locked" data-node="defining-locked"><i class="fas fa-lock"></i></div>
                     <span class="lp-snode-label">Defining</span>
                   </div>
                   <div class="lp-snode lp-snode-n2">
-                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <div class="lp-snode-icon locked" data-node="parameters-locked"><i class="fas fa-lock"></i></div>
                     <span class="lp-snode-label">Parameters</span>
                   </div>
                   <div class="lp-snode lp-snode-n3">
-                    <div class="lp-snode-icon locked"><i class="fas fa-lock"></i></div>
+                    <div class="lp-snode-icon locked" data-node="scope-locked"><i class="fas fa-lock"></i></div>
                     <span class="lp-snode-label">Scope</span>
                   </div>
                   <div class="lp-snode lp-snode-n4">
-                    <div class="lp-snode-icon boss locked"><i class="fas fa-lock"></i></div>
+                    <div class="lp-snode-icon boss locked" data-node="boss3-locked"><i class="fas fa-lock"></i></div>
                     <span class="lp-snode-label">Boss Fight</span>
                   </div>
                 </div>
@@ -576,16 +580,12 @@
 
         </div><!-- end panel-settings -->
 
-        <!-- ══════════════════════════════════════════════
+        <!-- ══════════════════════════════════════════
              ADVISOR PANEL
-        ══════════════════════════════════════════════ -->
+        ══════════════════════════════════════════ -->
         <div class="mid-panel" id="panel-advisor">
-          <div class="advisor-layout reveal visible">
-
-            <!-- LEFT: Task + Sandbox + Output -->
+          <div class="advisor-layout reveal">
             <div class="advisor-left">
-
-              <!-- Task Card (Image 1 style) -->
               <div class="adv-task-card">
                 <div class="adv-task-topbar">
                   <span class="adv-current-task-pill"><i class="fas fa-bolt"></i> CURRENT TASK</span>
@@ -593,52 +593,37 @@
                 </div>
                 <h2 class="adv-task-title">Build a number guessing game</h2>
                 <p class="adv-task-desc">Write a Python program that picks a random number 1–100 and lets the user guess until they find it. Give higher/lower hints after each attempt.</p>
-
-                <ul class="adv-checklist" id="advChecklist">
+                <ul class="adv-checklist">
                   <li class="adv-check done"><i class="fas fa-check-circle"></i><span>Import random module</span></li>
                   <li class="adv-check done"><i class="fas fa-check-circle"></i><span>Create guessing_game() function</span></li>
                   <li class="adv-check"><span class="adv-check-num">3</span><span>Build the while loop for guessing</span></li>
                   <li class="adv-check"><span class="adv-check-num">4</span><span>Add higher / lower hints</span></li>
                   <li class="adv-check"><span class="adv-check-num">5</span><span>Count attempts and show final score</span></li>
                 </ul>
-
                 <div class="adv-tags">
-                  <span class="adv-tag">Loops</span>
-                  <span class="adv-tag active-tag">Beginner</span>
-                  <span class="adv-tag">Functions</span>
-                  <span class="adv-tag">Random</span>
+                  <span class="adv-tag">Loops</span><span class="adv-tag active-tag">Beginner</span>
+                  <span class="adv-tag">Functions</span><span class="adv-tag">Random</span>
                 </div>
               </div>
-
-              <!-- Sandbox (Image 2 style) -->
               <div class="adv-sandbox">
                 <div class="adv-sandbox-bar">
-                  <div class="adv-sandbox-dots">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                  </div>
+                  <div class="adv-sandbox-dots"><span class="sdot red"></span><span class="sdot yellow"></span><span class="sdot green"></span></div>
                   <span class="adv-sandbox-filename">main.py</span>
-                  <button class="adv-run-btn" id="advRunBtn">
-                    <i class="fas fa-play"></i> Run
-                  </button>
+                  <button class="adv-run-btn" id="advRunBtn"><i class="fas fa-play"></i> Run</button>
                 </div>
-                <div class="adv-code-editor" id="advCodeEditor" contenteditable="true" spellcheck="false"><pre><span class="tok-kw">import</span> <span class="tok-mod">random</span>
+                <div class="adv-code-editor" contenteditable="true" spellcheck="false"><pre><span class="tok-kw">import</span> <span class="tok-mod">random</span>
 
-<span class="tok-kw">def</span> <span class="tok-fn">guessing_game</span>():
-    secret <span class="tok-op">=</span> random.<span class="tok-fn">randint</span>(<span class="tok-num">1</span>, <span class="tok-num">100</span>)
-    attempts <span class="tok-op">=</span> <span class="tok-num">0</span>
+                <span class="tok-kw">def</span> <span class="tok-fn">guessing_game</span>():
+                    secret <span class="tok-op">=</span> random.<span class="tok-fn">randint</span>(<span class="tok-num">1</span>, <span class="tok-num">100</span>)
+                    attempts <span class="tok-op">=</span> <span class="tok-num">0</span>
+                    <span class="tok-cm"># TODO: build the while loop here</span>
+                    <span class="tok-kw">while</span> <span class="tok-kw">True</span>:
+                        guess <span class="tok-op">=</span> <span class="tok-fn">int</span>(<span class="tok-fn">input</span>(<span class="tok-str">"Guess: "</span>))
+                        attempts <span class="tok-op">+=</span> <span class="tok-num">1</span>
+                        <span class="tok-cm">    # hints missing...</span>
 
-    <span class="tok-cm"># TODO: build the while loop here</span>
-    <span class="tok-kw">while</span> <span class="tok-kw">True</span>:
-        guess <span class="tok-op">=</span> <span class="tok-fn">int</span>(<span class="tok-fn">input</span>(<span class="tok-str">"Guess: "</span>))
-        attempts <span class="tok-op">+=</span> <span class="tok-num">1</span>
-        <span class="tok-cm">    # hints missing...</span>
-
-<span class="tok-fn">guessing_game</span>()</pre></div>
+                <span class="tok-fn">guessing_game</span>()</pre></div>
               </div>
-
-              <!-- Output (Image 2 style) -->
               <div class="adv-output">
                 <div class="adv-output-bar">
                   <span class="adv-output-label"><i class="fas fa-terminal"></i> output</span>
@@ -653,109 +638,374 @@
                   <div class="adv-out-line cursor-blink">&gt;</div>
                 </div>
               </div>
-
-            </div><!-- end advisor-left -->
-
-            <!-- RIGHT: EVA Chatbot (Image 1 style) -->
+            </div>
             <div class="adv-chat-panel">
-
-              <!-- Chat header -->
               <div class="adv-chat-header">
-                <div class="adv-eva-avatar">
-                  <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
-                </div>
+                <div class="adv-eva-avatar"><img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/></div>
                 <div class="adv-eva-info">
                   <h3 class="adv-eva-name">EVA — Python Advisor</h3>
                   <p class="adv-eva-sub">Hints only. Never gives answers.</p>
                 </div>
                 <span class="adv-online-pill"><span class="adv-online-dot"></span> Online</span>
               </div>
-
-              <!-- EVA rule banner -->
               <div class="adv-rule-banner">
                 <i class="fas fa-lightbulb adv-rule-icon"></i>
                 <p><strong>EVA's rule:</strong> She will never write your code. She asks questions, gives analogies, and nudges you in the right direction — the thinking is yours.</p>
               </div>
-
-              <!-- Quick action chips -->
               <div class="adv-quick-chips">
                 <button class="adv-chip" data-msg="I'm stuck"><i class="fas fa-circle-question"></i> I'm stuck</button>
                 <button class="adv-chip" data-msg="What's a while loop?"><i class="fas fa-magnifying-glass"></i> What's a while loop?</button>
                 <button class="adv-chip" data-msg="Why no output?"><i class="fas fa-triangle-exclamation"></i> Why no output?</button>
                 <button class="adv-chip" data-msg="Give me a strategy"><i class="fas fa-chess"></i> Give me a strategy</button>
               </div>
-
-              <!-- Messages -->
               <div class="adv-chat-messages" id="advChatMessages">
                 <div class="adv-msg eva">
-                  <div class="adv-msg-avatar">
-                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
-                  </div>
-                  <div class="adv-msg-bubble">
-                    <p class="adv-msg-sender">EVA</p>
-                    <p>🤝 <strong>Welcome! Let's think together.</strong></p>
-                    <p>I can see your loop is running but nothing happens after a guess. What do you think your code should <em>check</em> after the user types a number?</p>
-                  </div>
+                  <div class="adv-msg-avatar"><img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/></div>
+                  <div class="adv-msg-bubble"><p class="adv-msg-sender">EVA</p><p><i class="fas fa-handshake" style="color:var(--purple)"></i> <strong>Welcome! Let's think together.</strong></p><p>I can see your loop is running but nothing happens after a guess. What do you think your code should <em>check</em> after the user types a number?</p></div>
                 </div>
-
                 <div class="adv-msg user">
-                  <div class="adv-msg-bubble user-bubble">
-                    <p>I think it should check if the guess is correct?</p>
-                  </div>
+                  <div class="adv-msg-bubble user-bubble"><p>I think it should check if the guess is correct?</p></div>
                   <span class="adv-msg-meta">Me</span>
                 </div>
-
                 <div class="adv-msg eva">
-                  <div class="adv-msg-avatar">
-                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
-                  </div>
-                  <div class="adv-msg-bubble">
-                    <p>Exactly right! And what are the <em>three possible outcomes</em> when you compare two numbers? Think about it like a weighing scale — what can happen?</p>
-                    <blockquote class="adv-hint-block">
-                      <i class="fas fa-lightbulb"></i> Hint: there's not just "correct" and "wrong" — there's a third possibility between those two.
-                    </blockquote>
-                  </div>
+                  <div class="adv-msg-avatar"><img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/></div>
+                  <div class="adv-msg-bubble"><p>Exactly right! And what are the <em>three possible outcomes</em> when you compare two numbers? Think about it like a weighing scale — what can happen?</p><blockquote class="adv-hint-block"><i class="fas fa-lightbulb"></i> Hint: there's not just "correct" and "wrong" — there's a third possibility between those two.</blockquote></div>
                 </div>
-
-                <div class="adv-msg user">
-                  <div class="adv-msg-bubble user-bubble">
-                    <p>Oh — too high, too low, or exactly right!</p>
-                  </div>
-                  <span class="adv-msg-meta">Me</span>
-                </div>
-
-                <div class="adv-msg eva">
-                  <div class="adv-msg-avatar">
-                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
-                  </div>
-                  <div class="adv-msg-bubble">
-                    <p>🎯 <strong>You've got the logic!</strong></p>
-                    <p>Now — which Python statement lets you check multiple conditions like that? You've already used it in Section 2 of your learning path.</p>
-                  </div>
-                </div>
-
                 <div class="adv-msg eva typing-indicator" id="evaTyping" style="display:none">
-                  <div class="adv-msg-avatar">
-                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/>
+                  <div class="adv-msg-avatar"><img src="https://api.dicebear.com/8.x/bottts/svg?seed=EVA&backgroundColor=7c3aed" alt="EVA"/></div>
+                  <div class="adv-msg-bubble typing-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+              </div>
+              <div class="adv-chat-input-wrap">
+                <input type="text" class="adv-chat-input" id="advChatInput" placeholder="Ask EVA — she'll guide, not solve..."/>
+                <button class="adv-chat-send" id="advChatSend"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div>
+        </div><!-- end panel-advisor -->
+
+        <!-- ══════════════════════════════════════════
+             1v1 COMPETE PANEL
+        ══════════════════════════════════════════ -->
+        <div class="mid-panel" id="panel-compete">
+          <div class="compete-layout reveal">
+
+            <!-- ── LEFT: Task + Arena ── -->
+            <div class="compete-left">
+
+              <!-- Arena header bar -->
+              <div class="arena-header-bar">
+                <div class="arena-title-group">
+                  <i class="fas fa-swords arena-swords-icon"></i>
+                  <div>
+                    <h2 class="arena-title">1v1 Compete Arena</h2>
+                    <p class="arena-subtitle">Same task · Same age group · Best coder wins</p>
                   </div>
-                  <div class="adv-msg-bubble typing-bubble">
-                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                  </div>
+                </div>
+                <div class="arena-meta-pills">
+                  <span class="arena-pill" id="newMatchBtn" style="display:none; cursor:pointer">
+                    <i class="fas fa-rotate"></i> New Match
+                  </span>
+                  <span class="arena-age-pill">Age 12 · Python</span>
                 </div>
               </div>
 
-              <!-- Input bar -->
-              <div class="adv-chat-input-wrap">
-                <input type="text" class="adv-chat-input" id="advChatInput" placeholder="Ask EVA — she'll guide, not solve..."/>
-                <button class="adv-chat-send" id="advChatSend">
-                  <i class="fas fa-paper-plane"></i>
+              <!-- Task card -->
+              <div class="compete-task-card" id="competeTaskCard">
+                <div class="compete-task-top">
+                  <span class="compete-eva-pill"><i class="fas fa-shield-halved"></i> EVA TASK</span>
+                  <div class="compete-task-tags">
+                    <span class="compete-tag green">Beginner</span>
+                    <span class="compete-tag purple">Functions</span>
+                    <span class="compete-tag blue">Loops</span>
+                    <span class="compete-tag orange">Conditionals</span>
+                  </div>
+                  <span class="compete-xp-pill">+50 XP</span>
+                </div>
+                <h3 class="compete-task-title">FizzBuzz Challenge</h3>
+                <p class="compete-task-desc">Write a function <code>fizzbuzz(n)</code> that returns a list of numbers from 1 to n. For multiples of 3, replace with "Fizz"; for multiples of 5, replace with "Buzz"; for both, use "FizzBuzz".</p>
+                <div class="compete-examples">
+                  <div class="compete-example"><code>fizzbuzz(5) → [1, 2, 'Fizz', 4, 'Buzz']</code></div>
+                  <div class="compete-example"><code>fizzbuzz(15) → [..., 'FizzBuzz']</code></div>
+                </div>
+              </div>
+
+              <!-- PHASE 0: Matchmaking -->
+              <div class="compete-phase" id="phaseMatchmaking">
+                <div class="compete-vs-card">
+                  <div class="compete-player you-player">
+                    <div class="compete-player-avatar-wrap">
+                      <img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Maria" class="compete-player-avatar" alt="You"/>
+                    </div>
+                    <div class="compete-player-name">CodeWizard</div>
+                    <div class="compete-player-meta">Lv.19 · Age 12</div>
+                    <span class="compete-online-dot"></span>
+                  </div>
+
+                  <div class="compete-vs-badge">
+                    <span>VS</span>
+                  </div>
+
+                  <div class="compete-player opp-player">
+                    <div class="compete-player-avatar-wrap">
+                      <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PyMaster99&backgroundColor=10b981" class="compete-player-avatar" alt="Opponent"/>
+                    </div>
+                    <div class="compete-player-name">PyMaster99</div>
+                    <div class="compete-player-meta">Lv.26 · Age 12</div>
+                    <span class="compete-online-dot"></span>
+                  </div>
+                </div>
+
+                <div class="compete-match-fair">
+                  <i class="fas fa-shield-halved compete-match-icon"></i>
+                  EVA matched you with a same-age coder. Fair play guaranteed.
+                </div>
+
+                <button class="compete-start-btn" id="competeStartBtn">
+                  <i class="fas fa-play"></i> Start Battle!
                 </button>
               </div>
 
-            </div><!-- end adv-chat-panel -->
+              <!-- PHASE 1: Countdown -->
+              <div class="compete-phase hidden" id="phaseCountdown">
+                <div class="compete-countdown-wrap">
+                  <p class="compete-countdown-label">BATTLE STARTS IN...</p>
+                  <div class="compete-countdown-circle" id="countdownCircle">
+                    <svg class="countdown-ring-svg" viewBox="0 0 120 120">
+                      <circle class="countdown-ring-bg" cx="60" cy="60" r="52"/>
+                      <circle class="countdown-ring-fill" cx="60" cy="60" r="52" id="countdownRingFill"/>
+                    </svg>
+                    <span class="countdown-num" id="countdownNum">3</span>
+                  </div>
+                  <p class="compete-countdown-sub"><i class="fas fa-rocket" style="color:var(--purple)"></i> Get ready to code!</p>
+                </div>
+              </div>
 
-          </div><!-- end advisor-layout -->
-        </div><!-- end panel-advisor -->
+              <!-- PHASE 2: Battle -->
+              <div class="compete-phase hidden" id="phaseBattle">
+                <!-- Timer bar -->
+                <div class="compete-timer-bar-wrap">
+                  <i class="fas fa-clock compete-timer-icon"></i>
+                  <div class="compete-timer-track">
+                    <div class="compete-timer-fill" id="battleTimerFill"></div>
+                  </div>
+                  <span class="compete-timer-val" id="battleTimerVal">4:05</span>
+                </div>
+
+                <!-- Two-up code views -->
+                <div class="compete-battle-grid">
+                  <!-- YOU -->
+                  <div class="compete-coder-card you-card" id="youCoderCard">
+                    <div class="compete-coder-header">
+                      <img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Maria" class="compete-coder-avatar" alt="You"/>
+                      <div class="compete-coder-info">
+                        <span class="compete-coder-name">CodeWizard <span class="you-badge">YOU</span></span>
+                        <span class="compete-coder-meta">Age 12 · Lv.19</span>
+                      </div>
+                      <span class="compete-status-pill done hidden" id="youStatusDone"><i class="fas fa-circle-check"></i> Done!</span>
+                      <span class="compete-status-pill coding" id="youStatusCoding"><i class="fas fa-code"></i> Coding...</span>
+                    </div>
+                    <div class="compete-tests-row">
+                      <span class="compete-tests-label">Tests passed</span>
+                      <span class="compete-tests-val" id="youTestsVal">0/8</span>
+                    </div>
+                    <div class="compete-tests-bar"><div class="compete-tests-fill you-fill" id="youTestsFill" style="width:0%"></div></div>
+                    <div class="compete-test-dots" id="youTestDots">
+                      <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+                      <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+                    </div>
+                    <div class="compete-live-code-label"><i class="fas fa-code"></i> Live code</div>
+                    <div class="compete-code-view you-code" id="youCodeView"><pre id="youCodePre">def fizzbuzz(n):
+    result = []
+    for i in range(1, n + 1):
+        if i % 15 == 0:
+            result.append("FizzBuzz")
+        elif i % 3 == 0:
+            result.append("Fizz")
+        elif i % 5 == 0:
+            result.append("Buzz")</pre></div>
+                    <div class="compete-eva-hint" id="youEvaHint" style="display:none">
+                      <i class="fas fa-circle-check" style="color:#10b981"></i>
+                      <span id="youEvaHintText">EVA: CodeWizard passing all 8 test cases!</span>
+                    </div>
+                  </div>
+
+                  <!-- VS divider -->
+                  <div class="compete-vs-divider">VS</div>
+
+                  <!-- OPPONENT -->
+                  <div class="compete-coder-card opp-card" id="oppCoderCard">
+                    <div class="compete-coder-header">
+                      <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PyMaster99&backgroundColor=10b981" class="compete-coder-avatar" alt="Opponent"/>
+                      <div class="compete-coder-info">
+                        <span class="compete-coder-name">PyMaster99</span>
+                        <span class="compete-coder-meta">Age 12 · Lv.26</span>
+                      </div>
+                      <span class="compete-status-pill coding" id="oppStatusCoding"><i class="fas fa-code"></i> Coding...</span>
+                    </div>
+                    <div class="compete-tests-row">
+                      <span class="compete-tests-label">Tests passed</span>
+                      <span class="compete-tests-val" id="oppTestsVal">0/8</span>
+                    </div>
+                    <div class="compete-tests-bar"><div class="compete-tests-fill opp-fill" id="oppTestsFill" style="width:0%"></div></div>
+                    <div class="compete-test-dots" id="oppTestDots">
+                      <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+                      <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+                    </div>
+                    <div class="compete-live-code-label"><i class="fas fa-code"></i> Live code</div>
+                    <div class="compete-code-view opp-code" id="oppCodeView"><pre id="oppCodePre">def fizzbuzz(n):
+    result = []
+    for i in range(1, n + 1):
+        if i % 3 == 0 and i % 5 == 0:
+            result.append("FizzBuzz")
+        elif i % 3 == 0:
+            result.append("Fizz")
+        # missing buzz case</pre></div>
+                    <div class="compete-eva-hint" id="oppEvaHint" style="display:none">
+                      <i class="fas fa-triangle-exclamation" style="color:#f59e0b"></i>
+                      <span id="oppEvaHintText">EVA: PyMaster99 seems to be missing a condition...</span>
+                    </div>
+                  </div>
+                </div><!-- end compete-battle-grid -->
+              </div><!-- end phaseBattle -->
+
+              <!-- PHASE 3: Results -->
+              <div class="compete-phase hidden" id="phaseResult">
+                <div class="compete-winner-banner" id="resultBanner">
+                  <i class="fas fa-trophy compete-winner-trophy"></i>
+                  <span id="resultBannerText">CodeWizard wins! +50 XP earned</span>
+                  <i class="fas fa-fire compete-winner-fire"></i>
+                </div>
+
+                <div class="compete-result-grid">
+                  <div class="compete-result-card winner-card">
+                    <div class="compete-coder-header">
+                      <img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Maria" class="compete-coder-avatar" alt="You"/>
+                      <div class="compete-coder-info">
+                        <span class="compete-coder-name">CodeWizard <span class="you-badge">YOU</span></span>
+                        <span class="compete-coder-meta">Age 12 · Lv.19</span>
+                      </div>
+                    </div>
+                    <div class="compete-tests-row">
+                      <span class="compete-tests-label">Tests passed</span>
+                      <span class="compete-tests-val" style="color:var(--purple)">8/8</span>
+                    </div>
+                    <div class="compete-tests-bar"><div class="compete-tests-fill you-fill" style="width:100%"></div></div>
+                    <div class="compete-test-dots result-dots">
+                      <span class="tdot pass"></span><span class="tdot pass"></span><span class="tdot pass"></span><span class="tdot pass"></span>
+                      <span class="tdot pass"></span><span class="tdot pass"></span><span class="tdot pass"></span><span class="tdot pass"></span>
+                    </div>
+                    <div class="compete-live-code-label"><i class="fas fa-code"></i> Live code</div>
+                    <div class="compete-code-view you-code"><pre>def fizzbuzz(n):
+    result = []
+    for i in range(1, n + 1):
+        if i % 15 == 0:
+            result.append("FizzBuzz")
+        elif i % 3 == 0:
+            result.append("Fizz")
+        elif i % 5 == 0:
+            result.append("Buzz")
+    return result
+
+fizzbuzz(n)</pre></div>
+                    <div class="compete-result-footer winner-footer">
+                      <i class="fas fa-trophy" style="color:var(--purple)"></i>
+                      +50 XP — Winner!
+                    </div>
+                  </div>
+
+                  <div class="compete-vs-divider">VS</div>
+
+                  <div class="compete-result-card loser-card">
+                    <div class="compete-coder-header">
+                      <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PyMaster99&backgroundColor=10b981" class="compete-coder-avatar" alt="Opponent"/>
+                      <div class="compete-coder-info">
+                        <span class="compete-coder-name">PyMaster99</span>
+                        <span class="compete-coder-meta">Age 12 · Lv.26</span>
+                      </div>
+                    </div>
+                    <div class="compete-tests-row">
+                      <span class="compete-tests-label">Tests passed</span>
+                      <span class="compete-tests-val" style="color:#10b981">5/8</span>
+                    </div>
+                    <div class="compete-tests-bar"><div class="compete-tests-fill opp-fill" style="width:62.5%"></div></div>
+                    <div class="compete-test-dots result-dots">
+                      <span class="tdot pass"></span><span class="tdot pass"></span><span class="tdot pass"></span><span class="tdot pass"></span>
+                      <span class="tdot pass"></span><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+                    </div>
+                    <div class="compete-live-code-label"><i class="fas fa-code"></i> Live code</div>
+                    <div class="compete-code-view opp-code"><pre>def fizzbuzz(n):
+    result = []
+    for i in range(1, n + 1):
+        if i % 3 == 0 and i % 5 == 0:
+            result.append("FizzBuzz")
+        elif i % 3 == 0:
+            result.append("Fizz")
+        # missing buzz case
+    return result</pre></div>
+                    <div class="compete-result-footer loser-footer">
+                      +10 XP — Good effort!
+                    </div>
+                  </div>
+                </div><!-- end compete-result-grid -->
+              </div><!-- end phaseResult -->
+
+            </div><!-- end compete-left -->
+
+            <!-- ── RIGHT: EVA watching + Live Commentary + Quick Chat ── -->
+            <div class="compete-right">
+
+              <!-- EVA is watching header -->
+              <div class="compete-eva-header">
+                <div class="compete-eva-avatar-circle">E</div>
+                <div class="compete-eva-header-info">
+                  <h3 class="compete-eva-title">EVA is watching</h3>
+                  <p class="compete-eva-desc">I'm monitoring both coders and giving hints — not answers!</p>
+                </div>
+              </div>
+
+              <!-- Live Commentary -->
+              <div class="compete-commentary-section">
+                <h4 class="compete-section-heading"><i class="fas fa-circle-dot compete-live-dot"></i> LIVE COMMENTARY</h4>
+                <ul class="compete-commentary-list" id="competeCommentary">
+                  <li class="commentary-item">
+                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PyMaster99&backgroundColor=10b981" class="commentary-avatar" alt=""/>
+                    <p>PyMaster99 checks for both 3 and 5 — good start!</p>
+                  </li>
+                  <li class="commentary-item system">
+                    <div class="commentary-sys-icon"><i class="fas fa-circle-info"></i></div>
+                    <p>Match will start soon. Both players ready!</p>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Quick Chat -->
+              <div class="compete-quickchat-section">
+                <h4 class="compete-section-heading">QUICK CHAT</h4>
+                <div class="compete-emoji-chips">
+                  <button class="compete-emoji-btn" title="Good luck" data-chat="gl hf!"><i class="fas fa-hand-peace"></i></button>
+                  <button class="compete-emoji-btn" title="Fire!" data-chat="This is fire!"><i class="fas fa-fire"></i></button>
+                  <button class="compete-emoji-btn" title="LOL" data-chat="haha!"><i class="fas fa-face-grin-tears"></i></button>
+                  <button class="compete-emoji-btn" title="Hint?" data-chat="need a hint?"><i class="fas fa-lightbulb"></i></button>
+                  <button class="compete-emoji-btn" title="GG" data-chat="gg!"><i class="fas fa-trophy"></i></button>
+                  <button class="compete-emoji-btn" title="Nooo" data-chat="nooo!"><i class="fas fa-face-tired"></i></button>
+                </div>
+                <div class="compete-chat-log" id="competeChatLog">
+                  <div class="compete-chat-msg opp-msg">
+                    <img src="https://api.dicebear.com/8.x/bottts/svg?seed=PyMaster99&backgroundColor=10b981" class="chat-msg-avatar" alt=""/>
+                    <span><strong>PyMaster:</strong> gl hf! <i class="fas fa-gamepad" style="color:var(--purple)"></i></span>
+                  </div>
+                </div>
+                <div class="compete-chat-input-wrap">
+                  <input type="text" class="compete-chat-input" id="competeChatInput" placeholder="Say something..."/>
+                  <button class="compete-chat-send" id="competeChatSend"><i class="fas fa-paper-plane"></i></button>
+                </div>
+              </div>
+
+            </div><!-- end compete-right -->
+
+          </div><!-- end compete-layout -->
+        </div><!-- end panel-compete -->
 
       </section>
 
@@ -907,7 +1157,8 @@
 
   <canvas id="confettiCanvas"></canvas>
   <div class="toast-container" id="toastContainer"></div>
-
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.min.js"></script>
   <script src="dashboard-kids.js"></script>
 
 </body>
